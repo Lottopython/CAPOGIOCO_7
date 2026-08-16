@@ -3,135 +3,75 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Report SUPERBIG V3 - Capogioco 56</title>
+    <title>SUPERBIG V3 - Capogioco 56 (Report Completo)</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
         :root {
             --primary: #2c3e50;
-            --accent: #e74c3c;
-            --highlight: #f1c40f;
-            --bg: #f8f9fa;
-            --card-bg: #ffffff;
+            --accent: #c0392b;
+            --bg: #f4f6f9;
         }
-
-        body {
-            background-color: var(--bg);
-            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-            color: #333;
-            padding-bottom: 50px;
-        }
-
-        /* Header */
-        .hero-header {
-            background: linear-gradient(135deg, #1a2a6c, #b21f1f, #fdbb2d);
-            color: white;
-            padding: 3rem 0;
-            margin-bottom: 2rem;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-        }
-
-        .capogioco-badge {
-            font-size: 3rem;
-            font-weight: 800;
-            background: rgba(255,255,255,0.2);
-            border-radius: 15px;
-            padding: 10px 30px;
-            display: inline-block;
-            border: 2px solid rgba(255,255,255,0.4);
-        }
-
-        /* Cards */
-        .stat-card {
-            background: var(--card-bg);
-            border-radius: 12px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-            padding: 20px;
-            margin-bottom: 20px;
-            height: 100%;
-            border-top: 4px solid var(--primary);
-        }
-
-        .section-title {
-            color: var(--primary);
-            font-weight: 700;
-            border-left: 5px solid var(--accent);
-            padding-left: 15px;
-            margin: 30px 0 20px 0;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        /* Tables */
-        .table-custom thead th {
-            background-color: var(--primary);
-            color: white;
-            font-size: 0.85rem;
-            vertical-align: middle;
-        }
+        body { background-color: var(--bg); font-family: 'Segoe UI', sans-serif; color: #333; padding-bottom: 40px; }
         
-        .ruota-pill {
-            background: #e9ecef;
-            color: #495057;
-            padding: 2px 8px;
-            border-radius: 4px;
-            font-size: 0.75rem;
-            font-weight: bold;
-            margin: 1px;
-            display: inline-block;
+        /* Header */
+        .hero {
+            background: linear-gradient(135deg, #1a2a6c, #b21f1f, #fdbb2d);
+            color: white; padding: 2.5rem 0; margin-bottom: 2rem; text-align: center;
+        }
+        .capo-badge {
+            font-size: 3.5rem; font-weight: 900; 
+            background: rgba(255,255,255,0.15); border: 2px solid rgba(255,255,255,0.4);
+            border-radius: 12px; padding: 5px 35px; display: inline-block; margin: 10px 0;
         }
 
-        /* Badges */
-        .badge-forte { background-color: #27ae60; color: white; }
-        .badge-media { background-color: #f39c12; color: white; }
-        .badge-attesa { background-color: #95a5a6; color: white; }
+        /* Cards & Titles */
+        .card-custom { background: #fff; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); border-top: 4px solid var(--primary); padding: 20px; margin-bottom: 20px; height: 100%; }
+        .section-title { border-left: 5px solid var(--accent); padding-left: 15px; margin: 30px 0 20px; font-weight: 800; text-transform: uppercase; color: var(--primary); }
+
+        /* Main Data Table - Critical Styling */
+        .table-wrapper { overflow-x: auto; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.08); }
+        .main-table { 
+            width: 100%; border-collapse: collapse; font-size: 0.8rem; white-space: nowrap; 
+            font-family: 'Consolas', 'Courier New', monospace; background: #fff;
+        }
+        .main-table thead th { 
+            background: var(--primary); color: #fff; padding: 10px 8px; 
+            text-align: center; font-weight: 700; position: sticky; top: 0; z-index: 10;
+            border-right: 1px solid rgba(255,255,255,0.1);
+        }
+        .main-table tbody td { 
+            padding: 8px; text-align: center; border-bottom: 1px solid #eee; 
+            border-right: 1px solid #f0f0f0;
+        }
+        .main-table tbody tr:hover { background-color: #f8f9fa; }
+        .main-table .col-ambo { font-weight: 800; color: var(--primary); background: #eef2f7 !important; }
+        
+        /* Badges & Pills */
+        .ruota-pill { background: #e9ecef; padding: 2px 6px; border-radius: 3px; font-size: 0.7rem; font-weight: bold; margin: 1px; display: inline-block; }
+        .badge-forte { background: #27ae60; color: white; padding: 4px 8px; border-radius: 4px; font-weight: bold; }
+        .badge-media { background: #f39c12; color: white; padding: 4px 8px; border-radius: 4px; font-weight: bold; }
+        .badge-attesa { background: #95a5a6; color: white; padding: 4px 8px; border-radius: 4px; font-weight: bold; }
 
         /* Gann Bars */
-        .gann-container {
-            background-color: #ecf0f1;
-            border-radius: 10px;
-            height: 12px;
-            width: 100%;
-            overflow: hidden;
-        }
-        .gann-bar {
-            height: 100%;
-            background: linear-gradient(90deg, #e74c3c, #f1c40f);
-        }
+        .gann-bg { background: #ecf0f1; border-radius: 10px; height: 10px; width: 100%; overflow: hidden; }
+        .gann-fill { height: 100%; background: linear-gradient(90deg, #c0392b, #f1c40f); }
 
-        /* Synthesis Box */
-        .synthesis-box {
-            background: #fff3cd;
-            border: 2px solid #ffc107;
-            border-radius: 12px;
-            padding: 25px;
-        }
+        /* Synthesis */
+        .synth-box { background: #fff3cd; border: 2px solid #ffc107; border-radius: 12px; padding: 25px; }
+        .alert-scan { background: #e8f4fd; border-left: 5px solid #3498db; padding: 15px; border-radius: 4px; margin-bottom: 20px; }
 
-        .alert-scan {
-            background-color: #e8f4fd;
-            border-left: 5px solid #3498db;
-        }
-
-        footer {
-            margin-top: 40px;
-            padding: 20px;
-            text-align: center;
-            font-size: 0.8rem;
-            color: #7f8c8d;
-            border-top: 1px solid #ddd;
-        }
+        footer { margin-top: 40px; padding: 20px; text-align: center; font-size: 0.75rem; color: #7f8c8d; border-top: 1px solid #ddd; }
     </style>
 </head>
 <body>
 
-    <!-- Header -->
-    <header class="hero-header text-center">
+    <!-- HEADER -->
+    <header class="hero">
         <div class="container">
-            <h1 class="mb-3"><i class="fas fa-chart-pie me-2"></i>SUPERBIG V3 ANALYSIS</h1>
-            <div class="mb-3">
-                <span class="capogioco-badge">56</span>
-            </div>
+            <h1 class="mb-2"><i class="fas fa-chart-line me-2"></i>SUPERBIG V3 ANALYSIS</h1>
+            <div class="capo-badge">56</div>
             <p class="lead mb-0">Ruota Principale: <strong>CAGLIARI (CA)</strong></p>
             <small class="opacity-75">Periodo: 07.01.1871 - 14.08.2026 | Soglia Dinamica: 1500</small>
         </div>
@@ -139,8 +79,8 @@
 
     <div class="container">
 
-        <!-- Fase 0 Alert -->
-        <div class="alert alert-scan d-flex align-items-center mb-4" role="alert">
+        <!-- FASE 0 -->
+        <div class="alert-scan d-flex align-items-center">
             <i class="fas fa-search fa-2x me-3 text-primary"></i>
             <div>
                 <strong>FASE 0: SCANSIONE TOP-DOWN (Ambi > 1200 su Tutte)</strong><br>
@@ -148,65 +88,31 @@
             </div>
         </div>
 
-        <!-- Stats Overview -->
-        <h3 class="section-title">Analisi del Ciclo Attuale</h3>
-        <div class="row g-3">
-            <div class="col-md-3 col-6">
-                <div class="stat-card text-center">
-                    <div class="text-muted small">CICLI CHIUSI</div>
-                    <div class="fs-2 fw-bold text-primary">3</div>
-                </div>
-            </div>
-            <div class="col-md-3 col-6">
-                <div class="stat-card text-center">
-                    <div class="text-muted small">MAX STORICO 1</div>
-                    <div class="fs-2 fw-bold text-danger">5934</div>
-                </div>
-            </div>
-            <div class="col-md-3 col-6">
-                <div class="stat-card text-center">
-                    <div class="text-muted small">DURATA ATTUALE</div>
-                    <div class="fs-2 fw-bold text-info">792</div>
-                </div>
-            </div>
-            <div class="col-md-3 col-6">
-                <div class="stat-card text-center">
-                    <div class="text-muted small">INDICE %</div>
-                    <div class="fs-2 fw-bold text-success">9,778</div>
-                </div>
-            </div>
+        <!-- STATS OVERVIEW -->
+        <h3 class="section-title">Fase 1: Analisi del Ciclo</h3>
+        <div class="row g-3 mb-4">
+            <div class="col-md-3 col-6"><div class="card-custom text-center"><div class="text-muted small">CICLI CHIUSI</div><div class="fs-3 fw-bold text-primary">3</div></div></div>
+            <div class="col-md-3 col-6"><div class="card-custom text-center"><div class="text-muted small">MAX STORICO 1</div><div class="fs-3 fw-bold text-danger">5934</div></div></div>
+            <div class="col-md-3 col-6"><div class="card-custom text-center"><div class="text-muted small">DURATA ATTUALE</div><div class="fs-3 fw-bold text-info">792</div></div></div>
+            <div class="col-md-3 col-6"><div class="card-custom text-center"><div class="text-muted small">INDICE %</div><div class="fs-3 fw-bold text-success">9,778</div></div></div>
         </div>
 
-        <div class="row mt-3">
+        <div class="row mb-4">
             <div class="col-lg-8">
-                <div class="stat-card">
-                    <h5><i class="fas fa-list-ul me-2"></i>Dettagli Tecnici</h5>
-                    <ul class="list-group list-group-flush">
-                        <li class="list-group-item d-flex justify-content-between">
-                            <span>Soglia 90%</span> <strong>5340</strong>
-                        </li>
-                        <li class="list-group-item d-flex justify-content-between">
-                            <span>Passettino (Diff vs Max1)</span> <strong>5142</strong>
-                        </li>
-                        <li class="list-group-item d-flex justify-content-between">
-                            <span>Flag Passo</span> <span class="badge bg-danger">NO</span>
-                        </li>
-                        <li class="list-group-item">
-                            <strong>Distribuzione:</strong> 
-                            <span class="badge bg-secondary ms-1">>250: 3</span>
-                            <span class="text-muted small ms-2">(Altri range: 0)</span>
-                        </li>
-                        <li class="list-group-item">
-                            <strong>Ambo Unico Storico:</strong> 56-46 (Record 798 estr. | App. a vuoto 42)
-                        </li>
-                        <li class="list-group-item">
-                            <strong>Pres1x36:</strong> CA-GE-RO-
-                        </li>
+                <div class="card-custom">
+                    <h5 class="mb-3"><i class="fas fa-list-ul me-2"></i>Dettagli Tecnici</h5>
+                    <ul class="list-group list-group-flush small">
+                        <li class="list-group-item d-flex justify-content-between"><span>Soglia 90%</span> <strong>5340</strong></li>
+                        <li class="list-group-item d-flex justify-content-between"><span>Passettino (Diff vs Max1)</span> <strong>5142</strong></li>
+                        <li class="list-group-item d-flex justify-content-between"><span>Flag Passo</span> <span class="badge bg-danger">NO</span></li>
+                        <li class="list-group-item"><strong>Distribuzione:</strong> <span class="badge bg-secondary ms-1">>250: 3</span> <span class="text-muted">(Altri: 0)</span></li>
+                        <li class="list-group-item"><strong>Ambo Unico Storico:</strong> 56-46 (798 estr. | app. vuoto 42)</li>
+                        <li class="list-group-item"><strong>Pres1x36:</strong> CA-GE-RO-</li>
                     </ul>
                 </div>
             </div>
             <div class="col-lg-4">
-                <div class="stat-card bg-light">
+                <div class="card-custom bg-light">
                     <h5 class="text-center mb-3">Ambi Candidati (8)</h5>
                     <div class="d-flex flex-wrap justify-content-center gap-2">
                         <span class="btn btn-outline-dark btn-sm">04</span>
@@ -218,124 +124,209 @@
                         <span class="btn btn-outline-dark btn-sm">72</span>
                         <span class="btn btn-outline-dark btn-sm">88</span>
                     </div>
-                    <div class="text-center mt-3 small text-muted">
-                        Ambo Unico Attuale: Nessuno<br>(Ciclo ha 8 vergini)
-                    </div>
+                    <div class="text-center mt-3 small text-muted">Ambo Unico Attuale: Nessuno<br>(8 vergini nel ciclo)</div>
                 </div>
             </div>
         </div>
 
-        <!-- Main Table -->
-        <h3 class="section-title">Tabella Ambi & Indicatori</h3>
-        <div class="card shadow-sm mb-4">
-            <div class="card-body p-0">
-                <div class="table-responsive">
-                    <table class="table table-striped table-hover table-custom mb-0 align-middle text-center">
-                        <thead>
-                            <tr>
-                                <th>Ambo</th>
-                                <th>R.Tutte</th>
-                                <th>RmaxRuo</th>
-                                <th>Ruote Top</th>
-                                <th>%</th>
-                                <th>Trend</th>
-                                <th>Ind.Ambo</th>
-                                <th>Esito</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td class="fw-bold">56-04</td>
-                                <td>1186</td>
-                                <td>3112</td>
-                                <td><span class="ruota-pill">CA</span></td>
-                                <td>32,7</td>
-                                <td>0U-2D</td>
-                                <td class="fw-bold text-primary">2,429</td>
-                                <td><span class="badge badge-media">MEDIA</span></td>
-                            </tr>
-                            <tr>
-                                <td class="fw-bold">56-42</td>
-                                <td>1278</td>
-                                <td>1443</td>
-                                <td><span class="ruota-pill">BA</span><span class="ruota-pill">GE</span><span class="ruota-pill">RO</span></td>
-                                <td>28,63</td>
-                                <td>0U-3D</td>
-                                <td class="fw-bold">1,544</td>
-                                <td><span class="badge badge-media">MEDIA</span></td>
-                            </tr>
-                            <tr>
-                                <td class="fw-bold">56-67</td>
-                                <td>0</td>
-                                <td>0</td>
-                                <td><span class="ruota-pill">RO</span></td>
-                                <td>27,23</td>
-                                <td>0U-1D</td>
-                                <td>1,338</td>
-                                <td><span class="badge badge-media">MEDIA</span></td>
-                            </tr>
-                            <tr>
-                                <td class="fw-bold">56-88</td>
-                                <td>0934</td>
-                                <td>1999</td>
-                                <td><span class="ruota-pill">BA</span><span class="ruota-pill">CA</span></td>
-                                <td>21,96</td>
-                                <td>1U-0D</td>
-                                <td>1,23</td>
-                                <td><span class="badge badge-attesa">ATTESA</span></td>
-                            </tr>
-                            <tr>
-                                <td class="fw-bold">56-32</td>
-                                <td>0</td>
-                                <td>0</td>
-                                <td><span class="ruota-pill">BA</span><span class="ruota-pill">FI</span><span class="ruota-pill">PA</span><span class="ruota-pill">RO</span><span class="ruota-pill">TO</span></td>
-                                <td>8,77</td>
-                                <td>1U-0D</td>
-                                <td>0,663</td>
-                                <td><span class="badge badge-attesa">ATTESA</span></td>
-                            </tr>
-                            <tr>
-                                <td class="fw-bold">56-37</td>
-                                <td>0</td>
-                                <td>0</td>
-                                <td><span class="ruota-pill">CA</span><span class="ruota-pill">NA</span></td>
-                                <td>5,51</td>
-                                <td>0U-1D</td>
-                                <td>0,446</td>
-                                <td><span class="badge badge-media">MEDIA</span></td>
-                            </tr>
-                            <tr>
-                                <td class="fw-bold">56-49</td>
-                                <td>0</td>
-                                <td>0</td>
-                                <td><span class="ruota-pill">PA</span></td>
-                                <td>4,93</td>
-                                <td>0U-1D</td>
-                                <td>0,391</td>
-                                <td><span class="badge badge-media">MEDIA</span></td>
-                            </tr>
-                            <tr class="table-success">
-                                <td class="fw-bold">56-72</td>
-                                <td>1935</td>
-                                <td>2175</td>
-                                <td><span class="ruota-pill">MI</span></td>
-                                <td>3,01</td>
-                                <td>0U-1D</td>
-                                <td>0,203</td>
-                                <td><span class="badge badge-forte">FORTE</span></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
+        <!-- MAIN TABLE: 18 COLUMNS EXACT MATCH -->
+        <h3 class="section-title">Tabella Completa Ambi & Indicatori</h3>
+        <div class="table-wrapper mb-4">
+            <table class="main-table">
+                <thead>
+                    <tr>
+                        <th>Ambo</th>
+                        <th>nRUO</th>
+                        <th>RminCor</th>
+                        <th>SomRit</th>
+                        <th>R.Tutte</th>
+                        <th>RMed</th>
+                        <th>RmaxRuo</th>
+                        <th>Ruote</th>
+                        <th>-1Rx</th>
+                        <th>-1xTT</th>
+                        <th>%</th>
+                        <th>Rit.An.</th>
+                        <th>Trend</th>
+                        <th>P1x36</th>
+                        <th>GG Att.</th>
+                        <th>GG Stor.</th>
+                        <th>App.Vu</th>
+                        <th>Ind.Ambo</th>
+                        <th>ESITO</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="col-ambo">56-04</td>
+                        <td>1</td>
+                        <td>1186</td>
+                        <td>01186</td>
+                        <td>103</td>
+                        <td>1186</td>
+                        <td>3112</td>
+                        <td><span class="ruota-pill">CA</span></td>
+                        <td>926</td>
+                        <td>315</td>
+                        <td>32,7</td>
+                        <td>1186</td>
+                        <td>0U-2D</td>
+                        <td>CA-VE-</td>
+                        <td>0</td>
+                        <td></td>
+                        <td>2,429</td>
+                        <td><span class="badge-media">MEDIA</span></td>
+                    </tr>
+                    <tr>
+                        <td class="col-ambo">56-42</td>
+                        <td>3</td>
+                        <td>1278</td>
+                        <td>04190</td>
+                        <td>69</td>
+                        <td>1396,667</td>
+                        <td>1443</td>
+                        <td><span class="ruota-pill">BA</span><span class="ruota-pill">GE</span><span class="ruota-pill">RO</span></td>
+                        <td>1654</td>
+                        <td>241</td>
+                        <td>28,63</td>
+                        <td>799</td>
+                        <td>0U-3D</td>
+                        <td>MI-</td>
+                        <td>0</td>
+                        <td></td>
+                        <td>1,544</td>
+                        <td><span class="badge-media">MEDIA</span></td>
+                    </tr>
+                    <tr>
+                        <td class="col-ambo">56-67</td>
+                        <td>0</td>
+                        <td>0000</td>
+                        <td>00000</td>
+                        <td>61</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td><span class="ruota-pill">RO</span></td>
+                        <td>0</td>
+                        <td>224</td>
+                        <td>27,23</td>
+                        <td>1100</td>
+                        <td>0U-1D</td>
+                        <td>RO-</td>
+                        <td>0</td>
+                        <td></td>
+                        <td>1,338</td>
+                        <td><span class="badge-media">MEDIA</span></td>
+                    </tr>
+                    <tr>
+                        <td class="col-ambo">56-88</td>
+                        <td>2</td>
+                        <td>0934</td>
+                        <td>02365</td>
+                        <td>47</td>
+                        <td>1182,5</td>
+                        <td>1999</td>
+                        <td><span class="ruota-pill">BA</span><span class="ruota-pill">CA</span></td>
+                        <td>1127</td>
+                        <td>214</td>
+                        <td>21,96</td>
+                        <td>1431</td>
+                        <td>1U-0D</td>
+                        <td></td>
+                        <td>0</td>
+                        <td></td>
+                        <td>1,23</td>
+                        <td><span class="badge-attesa">ATTESA</span></td>
+                    </tr>
+                    <tr>
+                        <td class="col-ambo">56-32</td>
+                        <td>0</td>
+                        <td>0000</td>
+                        <td>00000</td>
+                        <td>25</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td><span class="ruota-pill">BA</span><span class="ruota-pill">FI</span><span class="ruota-pill">PA</span><span class="ruota-pill">RO</span><span class="ruota-pill">TO</span></td>
+                        <td>0</td>
+                        <td>285</td>
+                        <td>8,77</td>
+                        <td>860</td>
+                        <td>1U-0D</td>
+                        <td>BA-FI-PA-RO-TO-</td>
+                        <td>0</td>
+                        <td></td>
+                        <td>0,663</td>
+                        <td><span class="badge-attesa">ATTESA</span></td>
+                    </tr>
+                    <tr>
+                        <td class="col-ambo">56-37</td>
+                        <td>0</td>
+                        <td>0000</td>
+                        <td>00000</td>
+                        <td>19</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td><span class="ruota-pill">CA</span><span class="ruota-pill">NA</span></td>
+                        <td>0</td>
+                        <td>345</td>
+                        <td>5,51</td>
+                        <td>800</td>
+                        <td>0U-1D</td>
+                        <td>CA-NA-</td>
+                        <td>0</td>
+                        <td></td>
+                        <td>0,446</td>
+                        <td><span class="badge-media">MEDIA</span></td>
+                    </tr>
+                    <tr>
+                        <td class="col-ambo">56-49</td>
+                        <td>0</td>
+                        <td>0000</td>
+                        <td>00000</td>
+                        <td>20</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td><span class="ruota-pill">PA</span></td>
+                        <td>0</td>
+                        <td>406</td>
+                        <td>4,93</td>
+                        <td>1356</td>
+                        <td>0U-1D</td>
+                        <td>PA-</td>
+                        <td>0</td>
+                        <td></td>
+                        <td>0,391</td>
+                        <td><span class="badge-media">MEDIA</span></td>
+                    </tr>
+                    <tr style="background:#e8f5e9;">
+                        <td class="col-ambo">56-72</td>
+                        <td>1</td>
+                        <td>1935</td>
+                        <td>01935</td>
+                        <td>9</td>
+                        <td>1935</td>
+                        <td>2175</td>
+                        <td><span class="ruota-pill">MI</span></td>
+                        <td>861</td>
+                        <td>299</td>
+                        <td>3,01</td>
+                        <td>978</td>
+                        <td>0U-1D</td>
+                        <td>BA-FI-GE-</td>
+                        <td>0</td>
+                        <td></td>
+                        <td>0,203</td>
+                        <td><span class="badge-forte">FORTE</span></td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
 
-        <!-- Gann & Graduatoria -->
+        <!-- GRADUATORIA & GANN -->
         <div class="row">
             <div class="col-md-5">
-                <div class="stat-card">
+                <div class="card-custom">
                     <h5 class="mb-3"><i class="fas fa-trophy text-warning me-2"></i>Doppia Graduatoria</h5>
-                    <p><strong>Migliore per Ind.Ambo:</strong><br> <span class="fs-5 text-primary fw-bold">56-04</span> (ind. 2,429)</p>
+                    <p><strong>Migliore per Ind.Ambo:</strong><br><span class="fs-5 text-primary fw-bold">56-04</span> (ind. 2,429)</p>
                     <hr>
                     <h6>Top 4 Ruote (Ritardo rc):</h6>
                     <div class="d-flex gap-2 mb-2">
@@ -348,69 +339,74 @@
                 </div>
             </div>
             <div class="col-md-7">
-                <div class="stat-card">
-                    <h5 class="mb-3"><i class="fas fa-wave-square text-danger me-2"></i>Livelli GANN (56-04)</h5>
-                    <table class="table table-sm small align-middle">
-                        <thead><tr><th>Ruota</th><th>% rc/rx</th><th>Livello</th><th>Grafico</th></tr></thead>
+                <div class="card-custom">
+                    <h5 class="mb-3"><i class="fas fa-wave-square text-danger me-2"></i>Dettaglio rc/rx e GANN (56-04)</h5>
+                    <table class="table table-sm small align-middle mb-0">
+                        <thead><tr><th>Ruota</th><th>rc</th><th>rx</th><th>% rc/rx</th><th>Livello GANN</th><th>Grafico</th></tr></thead>
                         <tbody>
-                            <tr><td>CA</td><td>100%</td><td>MAX</td><td><div class="gann-container"><div class="gann-bar" style="width:100%"></div></div></td></tr>
-                            <tr><td>MI</td><td>73,5%</td><td>61,8%</td><td><div class="gann-container"><div class="gann-bar" style="width:73%"></div></div></td></tr>
-                            <tr><td>NA</td><td>31,4%</td><td>23,6%</td><td><div class="gann-container"><div class="gann-bar" style="width:31%"></div></div></td></tr>
-                            <tr><td>TO</td><td>29,4%</td><td>23,6%</td><td><div class="gann-container"><div class="gann-bar" style="width:29%"></div></div></td></tr>
-                            <tr><td>PA</td><td>26,5%</td><td>23,6%</td><td><div class="gann-container"><div class="gann-bar" style="width:26%"></div></div></td></tr>
-                            <tr><td>RO</td><td>25,8%</td><td>23,6%</td><td><div class="gann-container"><div class="gann-bar" style="width:25%"></div></div></td></tr>
-                            <tr class="text-muted"><td>GE</td><td>22,4%</td><td>&lt; 23,6%</td><td><div class="gann-container"><div class="gann-bar" style="width:22%"></div></div></td></tr>
+                            <tr><td>CA</td><td>1186</td><td>1186</td><td>100%</td><td>MAX</td><td><div class="gann-bg"><div class="gann-fill" style="width:100%"></div></div></td></tr>
+                            <tr><td>MI</td><td>819</td><td>1115</td><td>73,5%</td><td>61,8%</td><td><div class="gann-bg"><div class="gann-fill" style="width:73%"></div></div></td></tr>
+                            <tr><td>NA</td><td>349</td><td>1112</td><td>31,4%</td><td>23,6%</td><td><div class="gann-bg"><div class="gann-fill" style="width:31%"></div></div></td></tr>
+                            <tr><td>TO</td><td>472</td><td>1605</td><td>29,4%</td><td>23,6%</td><td><div class="gann-bg"><div class="gann-fill" style="width:29%"></div></div></td></tr>
+                            <tr><td>PA</td><td>387</td><td>1459</td><td>26,5%</td><td>23,6%</td><td><div class="gann-bg"><div class="gann-fill" style="width:26%"></div></div></td></tr>
+                            <tr><td>RO</td><td>331</td><td>1282</td><td>25,8%</td><td>23,6%</td><td><div class="gann-bg"><div class="gann-fill" style="width:25%"></div></div></td></tr>
+                            <tr class="text-muted"><td>GE</td><td>333</td><td>1489</td><td>22,4%</td><td>sotto 23,6%</td><td><div class="gann-bg"><div class="gann-fill" style="width:22%"></div></div></td></tr>
+                            <tr class="text-muted"><td>VE</td><td>184</td><td>1292</td><td>14,2%</td><td>sotto 23,6%</td><td><div class="gann-bg"><div class="gann-fill" style="width:14%"></div></div></td></tr>
+                            <tr class="text-muted"><td>BA</td><td>201</td><td>3112</td><td>6,5%</td><td>sotto 23,6%</td><td><div class="gann-bg"><div class="gann-fill" style="width:6%"></div></div></td></tr>
+                            <tr class="text-muted"><td>FI</td><td>103</td><td>1646</td><td>6,3%</td><td>sotto 23,6%</td><td><div class="gann-bg"><div class="gann-fill" style="width:6%"></div></div></td></tr>
                         </tbody>
                     </table>
                 </div>
             </div>
         </div>
 
-        <!-- Fasi Avanzate -->
+        <!-- FASI AVANZATE -->
         <h3 class="section-title">Analisi Avanzata (Fasi 3 & 4)</h3>
         <div class="row">
             <div class="col-lg-6">
-                <div class="stat-card h-100">
-                    <h5>Fase 3: Risonanza Multi-Archivio</h5>
-                    <div class="alert alert-warning py-2 mt-3">
-                        <strong>AMBI SINCRONI (Top 20 su >= 3 Archivi):</strong><br>Nessuno.
+                <div class="card-custom h-100">
+                    <h5>Fase 3: Risonanza Multi-Archivio (L0-L5)</h5>
+                    <div class="alert alert-warning py-2 mt-3 small">
+                        <strong>AMBI SINCRONI (Top 20 su >= 3 Archivi):</strong> Nessuno.
                     </div>
-                    <details class="mt-3">
+                    <details class="mt-2">
                         <summary class="text-primary small" style="cursor:pointer">Visualizza dati grezzi L0-L5</summary>
-                        <div class="bg-light p-2 mt-2 small text-monospace" style="max-height:150px; overflow-y:auto;">
-                            L0: 03.13 (255) | 17.45 (237) | 46.64 (240)<br>
-                            L1: 67.70 (277) | 22.68 (264) | 79.87 (275)<br>
-                            ... (dati estesi omessi per sintesi)
+                        <div class="bg-light p-2 mt-2 small text-monospace" style="max-height:120px; overflow-y:auto;">
+                            L0: 03.13 (255) | 17.45 (237) | 46.64 (240) | 67.70 (277)<br>
+                            L1: 22.68 (264) | 79.87 (275) | 12.88 (253) | 09.90 (237)<br>
+                            ... (dati completi omessi per sintesi visiva)
                         </div>
                     </details>
                 </div>
             </div>
             <div class="col-lg-6">
-                <div class="stat-card h-100">
-                    <h5>Fase 4: Gruppi Distanza (BA - Dist. 2)</h5>
-                    <table class="table table-bordered table-sm small">
+                <div class="card-custom h-100">
+                    <h5>Fase 4: Gruppi Distanza (CA - Dist. 2)</h5>
+                    <table class="table table-bordered table-sm small mb-2">
                         <thead class="table-light"><tr><th>Ambo</th><th>Ritardo</th><th>Stato</th></tr></thead>
                         <tbody>
-                            <tr class="table-danger fw-bold"><td>43-45</td><td>1506</td><td>OLTRE SOGLIA</td></tr>
-                            <tr><td>40-42</td><td>1404</td><td>sotto</td></tr>
-                            <tr><td>78-80</td><td>1329</td><td>sotto</td></tr>
-                            <tr><td>81-83</td><td>1314</td><td>sotto</td></tr>
-                            <tr><td>25-27</td><td>1278</td><td>sotto</td></tr>
+                            <tr class="table-danger fw-bold"><td>08-10</td><td>2237</td><td>OLTRE SOGLIA</td></tr>
+                            <tr><td>10-12</td><td>1423</td><td>sotto</td></tr>
+                            <tr><td>37-39</td><td>1317</td><td>sotto</td></tr>
+                            <tr><td>55-57</td><td>1293</td><td>sotto</td></tr>
+                            <tr><td>81-83</td><td>1176</td><td>sotto</td></tr>
+                            <tr><td>75-77</td><td>1101</td><td>sotto</td></tr>
+                            <tr><td>34-36</td><td>1061</td><td>sotto</td></tr>
                         </tbody>
                     </table>
-                    <div class="mt-2 small">
-                        <strong>Ritardo min gruppo:</strong> 1157<br>
-                        <strong>% vs max storico:</strong> 54,6%<br>
-                        <em class="text-muted">Gruppo non ancora maturo (minimo sotto soglia).</em>
+                    <div class="small text-muted">
+                        Rit. min gruppo: <strong>1061</strong> | Oltre soglia 1500: <strong>1</strong><br>
+                        % vs max storico (2119): <strong>50,07%</strong><br>
+                        Backtest: 0 campioni | Gruppo non ancora maturo.
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- Sintesi Finale -->
+        <!-- SINTESI FINALE -->
         <div class="row mt-4">
             <div class="col-12">
-                <div class="synthesis-box shadow">
+                <div class="synth-box shadow">
                     <div class="row align-items-center">
                         <div class="col-md-2 text-center d-none d-md-block">
                             <i class="fas fa-bullseye fa-5x text-warning"></i>
@@ -421,14 +417,14 @@
                                 <div class="col-md-6">
                                     <ul class="list-unstyled fs-5">
                                         <li class="mb-2"><i class="fas fa-hourglass-half text-muted me-2"></i><strong>STATO CICLO:</strong> Non imminente (~3 mesi)</li>
-                                        <li class="mb-2 text-success"><i class="fas fa-star me-2"></i><strong>AMBI FORTI/TOP:</strong> <br>
-                                            <span class="badge bg-success fs-6 mt-1">56-72</span>
+                                        <li class="mb-2 text-success"><i class="fas fa-star me-2"></i><strong>AMBI FORTI/TOP:</strong> 
+                                            <span class="badge bg-success fs-6">56-72</span>
                                         </li>
                                     </ul>
                                 </div>
                                 <div class="col-md-6">
                                     <ul class="list-unstyled fs-5">
-                                        <li class="mb-2 text-warning"><i class="fas fa-minus-circle me-2"></i><strong>AMBI MEDIA:</strong> <br>
+                                        <li class="mb-2 text-warning"><i class="fas fa-minus-circle me-2"></i><strong>AMBI MEDIA:</strong> 
                                             <small>56-04, 56-37, 56-42, 56-49, 56-67</small>
                                         </li>
                                         <li class="mb-2"><i class="fas fa-history text-info me-2"></i><strong>UNICO STORICO:</strong> 56-46 (798 estr.)</li>
@@ -437,7 +433,7 @@
                                 </div>
                             </div>
                             <div class="alert alert-info mt-3 py-2 small mb-0">
-                                <strong>METODO:</strong> Il gioco preferito resta su TUTTE le ruote; le ruote singole (CA, MI, TO, PA) solo come supporto.
+                                <strong>METODO:</strong> Gioco preferito su TUTTE le ruote. Ruote singole di supporto: CA, MI, TO, PA.
                             </div>
                         </div>
                     </div>
@@ -448,8 +444,8 @@
     </div>
 
     <footer>
-        <p>Tempo Elaborazione Totale: 00:00:36 | Generato da SUPERBIG V3 Engine</p>
-        <p class="small opacity-50">Nota: I dati presentati sono frutto di elaborazione statistica storica. Il gioco è vietato ai minori e può causare dipendenza patologica.</p>
+        <p>Tempo Elaborazione Totale: 00:00:46 | Generato da SUPERBIG V3 Engine</p>
+        <p class="small opacity-50">Nota: I dati sono frutto di elaborazione statistica storica. Il gioco è vietato ai minori e può causare dipendenza patologica.</p>
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
