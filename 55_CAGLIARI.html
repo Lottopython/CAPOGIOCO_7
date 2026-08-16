@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Report SUPERBIG V3 - Capogioco 55</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --primary: #2c3e50;
+            --accent: #e74c3c;
+            --highlight: #f1c40f;
+            --bg: #f8f9fa;
+            --card-bg: #ffffff;
+        }
+
+        body {
+            background-color: var(--bg);
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            color: #333;
+            padding-bottom: 50px;
+        }
+
+        /* Header */
+        .hero-header {
+            background: linear-gradient(135deg, #1a2a6c, #b21f1f, #fdbb2d);
+            color: white;
+            padding: 3rem 0;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        .capogioco-badge {
+            font-size: 3rem;
+            font-weight: 800;
+            background: rgba(255,255,255,0.2);
+            border-radius: 15px;
+            padding: 10px 30px;
+            display: inline-block;
+            border: 2px solid rgba(255,255,255,0.4);
+        }
+
+        /* Cards */
+        .stat-card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            padding: 20px;
+            margin-bottom: 20px;
+            height: 100%;
+            border-top: 4px solid var(--primary);
+        }
+
+        .section-title {
+            color: var(--primary);
+            font-weight: 700;
+            border-left: 5px solid var(--accent);
+            padding-left: 15px;
+            margin: 30px 0 20px 0;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Tables */
+        .table-custom thead th {
+            background-color: var(--primary);
+            color: white;
+            font-size: 0.85rem;
+            vertical-align: middle;
+        }
+        
+        .ruota-pill {
+            background: #e9ecef;
+            color: #495057;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: bold;
+            margin: 1px;
+            display: inline-block;
+        }
+
+        /* Badges */
+        .badge-forte { background-color: #27ae60; color: white; }
+        .badge-media { background-color: #f39c12; color: white; }
+        .badge-attesa { background-color: #95a5a6; color: white; }
+
+        /* Gann Bars */
+        .gann-container {
+            background-color: #ecf0f1;
+            border-radius: 10px;
+            height: 12px;
+            width: 100%;
+            overflow: hidden;
+        }
+        .gann-bar {
+            height: 100%;
+            background: linear-gradient(90deg, #e74c3c, #f1c40f);
+        }
+
+        /* Synthesis Box */
+        .synthesis-box {
+            background: #fff3cd;
+            border: 2px solid #ffc107;
+            border-radius: 12px;
+            padding: 25px;
+        }
+
+        .alert-scan {
+            background-color: #e8f4fd;
+            border-left: 5px solid #3498db;
+        }
+
+        footer {
+            margin-top: 40px;
+            padding: 20px;
+            text-align: center;
+            font-size: 0.8rem;
+            color: #7f8c8d;
+            border-top: 1px solid #ddd;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <header class="hero-header text-center">
+        <div class="container">
+            <h1 class="mb-3"><i class="fas fa-chart-pie me-2"></i>SUPERBIG V3 ANALYSIS</h1>
+            <div class="mb-3">
+                <span class="capogioco-badge">55</span>
+            </div>
+            <p class="lead mb-0">Ruota Principale: <strong>CAGLIARI (CA)</strong></p>
+            <small class="opacity-75">Periodo: 07.01.1871 - 14.08.2026 | Soglia Dinamica: 1500</small>
+        </div>
+    </header>
+
+    <div class="container">
+
+        <!-- Fase 0 Alert -->
+        <div class="alert alert-scan d-flex align-items-center mb-4" role="alert">
+            <i class="fas fa-search fa-2x me-3 text-primary"></i>
+            <div>
+                <strong>FASE 0: SCANSIONE TOP-DOWN (Ambi > 1200 su Tutte)</strong><br>
+                Nessun ambo trovato con ritardo >= 1200. Ricerca completata.
+            </div>
+        </div>
+
+        <!-- Stats Overview -->
+        <h3 class="section-title">Analisi del Ciclo Attuale</h3>
+        <div class="row g-3">
+            <div class="col-md-3 col-6">
+                <div class="stat-card text-center">
+                    <div class="text-muted small">CICLI CHIUSI</div>
+                    <div class="fs-2 fw-bold text-primary">3</div>
+                </div>
+            </div>
+            <div class="col-md-3 col-6">
+                <div class="stat-card text-center">
+                    <div class="text-muted small">MAX STORICO 1</div>
+                    <div class="fs-2 fw-bold text-danger">5507</div>
+                </div>
+            </div>
+            <div class="col-md-3 col-6">
+                <div class="stat-card text-center">
+                    <div class="text-muted small">DURATA ATTUALE</div>
+                    <div class="fs-2 fw-bold text-info">1192</div>
+                </div>
+            </div>
+            <div class="col-md-3 col-6">
+                <div class="stat-card text-center">
+                    <div class="text-muted small">INDICE %</div>
+                    <div class="fs-2 fw-bold text-success">14,716</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mt-3">
+            <div class="col-lg-8">
+                <div class="stat-card">
+                    <h5><i class="fas fa-list-ul me-2"></i>Dettagli Tecnici</h5>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item d-flex justify-content-between">
+                            <span>Soglia 90%</span> <strong>4956</strong>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between">
+                            <span>Passettino (Diff vs Max1)</span> <strong>4315</strong>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between">
+                            <span>Flag Passo</span> <span class="badge bg-danger">NO</span>
+                        </li>
+                        <li class="list-group-item">
+                            <strong>Distribuzione:</strong> 
+                            <span class="badge bg-secondary ms-1">>250: 3</span>
+                            <span class="text-muted small ms-2">(Altri range: 0)</span>
+                        </li>
+                        <li class="list-group-item">
+                            <strong>Ambo Unico Storico:</strong> 55-28 (Record 1042 estr. | App. a vuoto 49)
+                        </li>
+                        <li class="list-group-item">
+                            <strong>Pres1x36:</strong> BA-MI-TO-
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="stat-card bg-light">
+                    <h5 class="text-center mb-3">Ambi Candidati (8)</h5>
+                    <div class="d-flex flex-wrap justify-content-center gap-2">
+                        <span class="btn btn-outline-dark btn-sm">03</span>
+                        <span class="btn btn-outline-dark btn-sm">04</span>
+                        <span class="btn btn-outline-dark btn-sm">12</span>
+                        <span class="btn btn-outline-dark btn-sm">35</span>
+                        <span class="btn btn-outline-dark btn-sm">44</span>
+                        <span class="btn btn-outline-dark btn-sm">57</span>
+                        <span class="btn btn-outline-dark btn-sm">87</span>
+                        <span class="btn btn-outline-dark btn-sm">88</span>
+                    </div>
+                    <div class="text-center mt-3 small text-muted">
+                        Ambo Unico Attuale: Nessuno<br>(Ciclo ha 8 vergini)
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Table -->
+        <h3 class="section-title">Tabella Ambi & Indicatori</h3>
+        <div class="card shadow-sm mb-4">
+            <div class="card-body p-0">
+                <div class="table-responsive">
+                    <table class="table table-striped table-hover table-custom mb-0 align-middle text-center">
+                        <thead>
+                            <tr>
+                                <th>Ambo</th>
+                                <th>R.Tutte</th>
+                                <th>RmaxRuo</th>
+                                <th>Ruote Top</th>
+                                <th>%</th>
+                                <th>Trend</th>
+                                <th>Ind.Ambo</th>
+                                <th>Esito</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="fw-bold">55-03</td>
+                                <td>1293</td>
+                                <td>1751</td>
+                                <td><span class="ruota-pill">CA</span><span class="ruota-pill">PA</span></td>
+                                <td>71,69</td>
+                                <td>0U-1D</td>
+                                <td class="fw-bold text-primary">3,783</td>
+                                <td><span class="badge badge-media">MEDIA</span></td>
+                            </tr>
+                            <tr class="table-success">
+                                <td class="fw-bold">55-88</td>
+                                <td>2698</td>
+                                <td>2698</td>
+                                <td><span class="ruota-pill">CA</span></td>
+                                <td>56,04</td>
+                                <td>0U-3D</td>
+                                <td class="fw-bold">3,218</td>
+                                <td><span class="badge badge-forte">FORTE</span></td>
+                            </tr>
+                            <tr class="table-success">
+                                <td class="fw-bold">55-35</td>
+                                <td>1594</td>
+                                <td>1594</td>
+                                <td><span class="ruota-pill">CA</span><span class="ruota-pill">PA</span></td>
+                                <td>30,83</td>
+                                <td>4U-0D</td>
+                                <td class="fw-bold">1,761</td>
+                                <td><span class="badge badge-forte">FORTE</span></td>
+                            </tr>
+                            <tr>
+                                <td class="fw-bold">55-12</td>
+                                <td>0860</td>
+                                <td>3111</td>
+                                <td><span class="ruota-pill">CA</span><span class="ruota-pill">MI</span></td>
+                                <td>13,16</td>
+                                <td>2U-0D</td>
+                                <td>0,728</td>
+                                <td><span class="badge badge-attesa">ATTESA</span></td>
+                            </tr>
+                            <tr>
+                                <td class="fw-bold">55-57</td>
+                                <td>1059</td>
+                                <td>1407</td>
+                                <td><span class="ruota-pill">CA</span><span class="ruota-pill">RO</span><span class="ruota-pill">TO</span></td>
+                                <td>2,52</td>
+                                <td>2U-0D</td>
+                                <td>0,173</td>
+                                <td><span class="badge badge-attesa">ATTESA</span></td>
+                            </tr>
+                            <tr class="table-success">
+                                <td class="fw-bold">55-44</td>
+                                <td>1424</td>
+                                <td>1424</td>
+                                <td><span class="ruota-pill">NA</span><span class="ruota-pill">VE</span></td>
+                                <td>1,72</td>
+                                <td>0U-1D</td>
+                                <td>0,089</td>
+                                <td><span class="badge badge-forte">FORTE</span></td>
+                            </tr>
+                            <tr>
+                                <td class="fw-bold">55-04</td>
+                                <td>1432</td>
+                                <td>1587</td>
+                                <td><span class="ruota-pill">CA</span></td>
+                                <td>0,88</td>
+                                <td>0U-1D</td>
+                                <td>0,047</td>
+                                <td><span class="badge badge-media">MEDIA</span></td>
+                            </tr>
+                            <tr class="table-success">
+                                <td class="fw-bold">55-87</td>
+                                <td>1682</td>
+                                <td>1682</td>
+                                <td><span class="ruota-pill">CA</span></td>
+                                <td>0,67</td>
+                                <td>1U-0D</td>
+                                <td>0,047</td>
+                                <td><span class="badge badge-forte">FORTE</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Gann & Graduatoria -->
+        <div class="row">
+            <div class="col-md-5">
+                <div class="stat-card">
+                    <h5 class="mb-3"><i class="fas fa-trophy text-warning me-2"></i>Doppia Graduatoria</h5>
+                    <p><strong>Migliore per Ind.Ambo:</strong><br> <span class="fs-5 text-primary fw-bold">55-03</span> (ind. 3,783)</p>
+                    <hr>
+                    <h6>Top 4 Ruote (Ritardo rc):</h6>
+                    <div class="d-flex gap-2 mb-2">
+                        <span class="badge bg-dark fs-6">CA</span>
+                        <span class="badge bg-dark fs-6">PA</span>
+                        <span class="badge bg-dark fs-6">GE</span>
+                        <span class="badge bg-dark fs-6">TO</span>
+                    </div>
+                    <small class="text-muted">Gioco preferito resta TUTTE</small>
+                </div>
+            </div>
+            <div class="col-md-7">
+                <div class="stat-card">
+                    <h5 class="mb-3"><i class="fas fa-wave-square text-danger me-2"></i>Livelli GANN (55-03)</h5>
+                    <table class="table table-sm small align-middle">
+                        <thead><tr><th>Ruota</th><th>% rc/rx</th><th>Livello</th><th>Grafico</th></tr></thead>
+                        <tbody>
+                            <tr><td>PA</td><td>100%</td><td>MAX</td><td><div class="gann-container"><div class="gann-bar" style="width:100%"></div></div></td></tr>
+                            <tr><td>CA</td><td>91%</td><td>75%</td><td><div class="gann-container"><div class="gann-bar" style="width:91%"></div></div></td></tr>
+                            <tr><td>TO</td><td>62,3%</td><td>61,8%</td><td><div class="gann-container"><div class="gann-bar" style="width:62%"></div></div></td></tr>
+                            <tr><td>MI</td><td>47%</td><td>38,2%</td><td><div class="gann-container"><div class="gann-bar" style="width:47%"></div></div></td></tr>
+                            <tr><td>GE</td><td>45,1%</td><td>38,2%</td><td><div class="gann-container"><div class="gann-bar" style="width:45%"></div></div></td></tr>
+                            <tr><td>NA</td><td>42,9%</td><td>38,2%</td><td><div class="gann-container"><div class="gann-bar" style="width:42%"></div></div></td></tr>
+                            <tr class="text-muted"><td>VE</td><td>18,9%</td><td>&lt; 23,6%</td><td><div class="gann-container"><div class="gann-bar" style="width:18%"></div></div></td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Fasi Avanzate -->
+        <h3 class="section-title">Analisi Avanzata (Fasi 3 & 4)</h3>
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="stat-card h-100">
+                    <h5>Fase 3: Risonanza Multi-Archivio</h5>
+                    <div class="alert alert-warning py-2 mt-3">
+                        <strong>AMBI SINCRONI (Top 20 su >= 3 Archivi):</strong><br>Nessuno.
+                    </div>
+                    <details class="mt-3">
+                        <summary class="text-primary small" style="cursor:pointer">Visualizza dati grezzi L0-L5</summary>
+                        <div class="bg-light p-2 mt-2 small text-monospace" style="max-height:150px; overflow-y:auto;">
+                            L0: 03.13 (255) | 17.45 (237) | 46.64 (240)<br>
+                            L1: 67.70 (277) | 22.68 (264) | 79.87 (275)<br>
+                            ... (dati estesi omessi per sintesi)
+                        </div>
+                    </details>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="stat-card h-100">
+                    <h5>Fase 4: Gruppi Distanza (FI - Dist. 2)</h5>
+                    <table class="table table-bordered table-sm small">
+                        <thead class="table-light"><tr><th>Ambo</th><th>Ritardo</th><th>Stato</th></tr></thead>
+                        <tbody>
+                            <tr class="table-danger fw-bold"><td>07-09</td><td>2137</td><td>OLTRE SOGLIA</td></tr>
+                            <tr><td>86-88</td><td>1499</td><td>sotto</td></tr>
+                            <tr><td>64-66</td><td>1440</td><td>sotto</td></tr>
+                            <tr><td>01-03</td><td>1380</td><td>sotto</td></tr>
+                            <tr><td>12-14</td><td>1288</td><td>sotto</td></tr>
+                        </tbody>
+                    </table>
+                    <div class="mt-2 small">
+                        <strong>Ritardo min gruppo:</strong> 1220<br>
+                        <strong>% vs max storico:</strong> 57,57%<br>
+                        <em class="text-muted">Gruppo non ancora maturo (minimo sotto soglia).</em>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sintesi Finale -->
+        <div class="row mt-4">
+            <div class="col-12">
+                <div class="synthesis-box shadow">
+                    <div class="row align-items-center">
+                        <div class="col-md-2 text-center d-none d-md-block">
+                            <i class="fas fa-bullseye fa-5x text-warning"></i>
+                        </div>
+                        <div class="col-md-10">
+                            <h2 class="text-uppercase fw-bold mb-3 text-dark">Sintesi SUPERBIG V3</h2>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <ul class="list-unstyled fs-5">
+                                        <li class="mb-2"><i class="fas fa-hourglass-half text-muted me-2"></i><strong>STATO CICLO:</strong> Non imminente (~3 mesi)</li>
+                                        <li class="mb-2 text-success"><i class="fas fa-star me-2"></i><strong>AMBI FORTI/TOP:</strong> <br>
+                                            <span class="badge bg-success fs-6 mt-1">55-35</span>
+                                            <span class="badge bg-success fs-6 mt-1">55-44</span>
+                                            <span class="badge bg-success fs-6 mt-1">55-87</span>
+                                            <span class="badge bg-success fs-6 mt-1">55-88</span>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="col-md-6">
+                                    <ul class="list-unstyled fs-5">
+                                        <li class="mb-2 text-warning"><i class="fas fa-minus-circle me-2"></i><strong>AMBI MEDIA:</strong> 55-03, 55-04</li>
+                                        <li class="mb-2"><i class="fas fa-history text-info me-2"></i><strong>UNICO STORICO:</strong> 55-28 (1042 estr.)</li>
+                                        <li class="mb-2"><i class="fas fa-map-marker-alt text-danger me-2"></i><strong>PRES1x36:</strong> BA-MI-TO-</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="alert alert-info mt-3 py-2 small mb-0">
+                                <strong>METODO:</strong> Il gioco preferito resta su TUTTE le ruote; le ruote singole (CA, PA, GE, TO) solo come supporto.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <footer>
+        <p>Tempo Elaborazione Totale: 00:00:31 | Generato da SUPERBIG V3 Engine</p>
+        <p class="small opacity-50">Nota: I dati presentati sono frutto di elaborazione statistica storica. Il gioco è vietato ai minori e può causare dipendenza patologica.</p>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
