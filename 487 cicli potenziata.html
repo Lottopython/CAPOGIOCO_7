@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Analisi Statistica Lotto – Ruota di BARI</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:"Segoe UI",Arial,sans-serif;background:#eef2f7;color:#263238}
+header{background:linear-gradient(135deg,#0d1b4c,#1a3a8f 55%,#0d47a1);color:#fff;padding:34px 16px 28px;text-align:center}
+header h1{font-size:26px;letter-spacing:1px}
+header .sub{opacity:.85;margin-top:6px;font-size:14px}
+.statbar{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;margin-top:20px}
+.stat{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.28);border-radius:10px;padding:10px 18px;min-width:180px}
+.stat b{display:block;font-size:18px}
+.stat span{font-size:11px;text-transform:uppercase;letter-spacing:1px;opacity:.8}
+.container{max-width:1150px;margin:0 auto;padding:20px 14px 40px}
+h2.sez{margin:36px 0 14px;font-size:20px;color:#0d1b4c;border-left:6px solid #ff6f00;padding-left:10px;text-transform:uppercase}
+.card{background:#fff;border-radius:12px;box-shadow:0 3px 10px rgba(13,27,76,.10);padding:18px;margin-bottom:18px}
+/* ---- legenda ---- */
+.legend-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(330px,1fr));gap:8px 16px}
+.lg{background:#f7f9fc;border-left:4px solid #1a3a8f;border-radius:6px;padding:8px 10px;font-size:13px}
+.lg b{color:#0d1b4c}
+.colorcode{font-size:13px;line-height:1.7}
+.swatch{display:inline-block;width:14px;height:14px;border-radius:3px;vertical-align:-2px;margin-right:6px}
+.sw-red{background:#ffcdd2;border:1px solid #c62828}
+.sw-green{background:#c8e6c9;border:1px solid #2e7d32}
+.sw-yellow{background:#fff8e1;border:1px solid #ffc107}
+.colorcode ul{margin:6px 0 6px 20px}
+/* ---- chips nav ---- */
+#chips{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0 4px}
+.chip{background:#0d1b4c;color:#fff;text-decoration:none;padding:6px 14px;border-radius:20px;font-size:13px;font-weight:600;transition:.2s}
+.chip:hover{background:#ff6f00}
+/* ---- tabelle decine ---- */
+.decina-card{scroll-margin-top:20px;padding:0;overflow:hidden}
+.decina-title{display:flex;flex-wrap:wrap;gap:10px;align-items:center;padding:13px 18px;background:linear-gradient(90deg,#0d1b4c,#1a3a8f);color:#fff}
+.decina-badge{font-size:16px;font-weight:800;letter-spacing:1px}
+.best-badge{background:#ffd600;color:#3e2c00;padding:3px 12px;border-radius:14px;font-size:12px;font-weight:800}
+.table-scroll{overflow-x:auto}
+table.decina{border-collapse:collapse;width:100%;font-family:ui-monospace,Consolas,"Courier New",monospace;font-size:13px}
+.decina th,.decina td{border:1px solid #dfe4ec;padding:6px 9px;text-align:center;white-space:nowrap}
+.decina thead th{background:#303f9f;color:#fff}
+.decina th.besthead{background:#2e7d32}
+.decina .rowlabel{position:sticky;left:0;background:#37474f;color:#fff;font-family:"Segoe UI",Arial,sans-serif;font-size:11px;font-weight:700;text-align:left;letter-spacing:.5px;z-index:2;min-width:100px}
+.decina thead .rowlabel{background:#1a237e;z-index:3}
+tr.r-Ritardo td:not(.rowlabel),tr.r-RitMax td:not(.rowlabel){background:#e8f1fb}
+tr.r-SCompComp td:not(.rowlabel){background:#f3e8fb}
+tr.r-Score td:not(.rowlabel){background:#fff7e0}
+tr.r-Urgenza td:not(.rowlabel){background:#fdeaea}
+tr.r-Mappa td:not(.rowlabel){background:#eceff1}
+.decina td.crit{background:#ffcdd2!important;color:#b71c1c;font-weight:700}
+.decina td.urgmax{background:#c62828!important;color:#fff;font-weight:800;animation:pulse 1.3s infinite}
+.decina td.bestbg{background:#c8e6c9!important}
+.decina td.bestcell{color:#1b5e20;font-weight:800}
+@keyframes pulse{0%,100%{box-shadow:inset 0 0 0 0 rgba(255,235,59,0)}50%{box-shadow:inset 0 0 0 4px rgba(255,235,59,.9)}}
+.mp{display:inline-block;width:13px;height:13px;border-radius:50%;margin:0 1px;vertical-align:middle}
+.mp.o{background:#2e7d32;box-shadow:inset -2px -2px 3px rgba(0,0,0,.3)}
+.mp.d{background:#cfd8dc;border:1px solid #b0bec5}
+.summary{background:#fff8e1;border-top:3px solid #ffc107;padding:12px 18px;font-size:13px}
+.sum-item{padding:2px 0;color:#5d4037}
+.sum-best{padding:4px 10px;margin:4px 0;background:#2e7d32;color:#fff;font-weight:800;border-radius:6px;display:inline-block}
+/* ---- classifiche ---- */
+table.rank{border-collapse:collapse;width:100%;font-family:ui-monospace,Consolas,monospace;font-size:13px}
+.rank th{background:#0d1b4c;color:#fff;padding:9px 8px;font-size:12px}
+.rank td{border-bottom:1px solid #e0e5ee;padding:8px;text-align:center}
+.rank tr.top4 td{background:#e8f5e9}
+.rank tr.urg td{background:#ffebee}
+.rank tr.gold td{background:#fff8e1}
+.scr{background:#0d47a1;color:#fff;border-radius:4px;padding:2px 7px;font-weight:700}
+.scr.hot{background:#2e7d32}
+.redtx{color:#c62828;font-weight:800}
+.greentx{color:#1b5e20;font-weight:800}
+/* ---- backtest ---- */
+.bt{display:grid;gap:16px;margin-top:10px}
+.bt-row{display:grid;grid-template-columns:250px 1fr 90px;gap:12px;align-items:center}
+@media(max-width:720px){.bt-row{grid-template-columns:1fr}}
+.bt-bar{position:relative;background:#eceff1;border-radius:8px;height:22px;overflow:visible}
+.bt-fill{height:100%;border-radius:8px}
+.bt-fill.green{background:linear-gradient(90deg,#43a047,#66bb6a)}
+.bt-fill.red{background:linear-gradient(90deg,#e53935,#ef5350)}
+.bt-mark{position:absolute;top:-5px;bottom:-5px;width:3px;background:#0d1b4c;border-radius:2px}
+.bt-pct{font-weight:800;font-size:18px;text-align:right}
+.bt-badge{font-size:11px;font-weight:800;border-radius:4px;padding:2px 8px;color:#fff;margin-left:8px}
+.bt-badge.g{background:#2e7d32}.bt-badge.r{background:#c62828}
+.small-note{font-size:12.5px;color:#607d8b;margin-top:10px;line-height:1.6}
+/* ---- suggeritore ---- */
+.sugg{background:linear-gradient(135deg,#1b5e20,#2e7d32);color:#fff}
+.sugg h3{margin-bottom:14px;letter-spacing:1px}
+.sugg-row{display:flex;align-items:center;gap:16px;flex-wrap:wrap;margin:14px 0}
+.sugg-label{min-width:170px;font-weight:700;font-size:14px}
+.sugg-label small{display:block;font-weight:400;opacity:.85;font-size:12px}
+.ballrow{display:flex;gap:14px}
+.ball{width:66px;height:66px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:25px;background:radial-gradient(circle at 32% 30%,#fffde7,#ffd600 55%,#ff8f00);color:#4e342e;box-shadow:0 4px 10px rgba(0,0,0,.35),inset 0 -4px 6px rgba(0,0,0,.15)}
+.ball.silver{background:radial-gradient(circle at 32% 30%,#fff,#cfd8dc 55%,#78909c);color:#263238}
+.disclaimer{margin-top:14px;font-size:12.5px;background:rgba(0,0,0,.22);padding:10px 14px;border-radius:8px;line-height:1.6}
+/* ---- scanner ---- */
+.gemella{display:flex;gap:18px;align-items:center;flex-wrap:wrap;margin-bottom:14px}
+.wheel-badge{background:#0d1b4c;color:#fff;border-radius:12px;padding:14px 24px;font-size:20px;font-weight:800;text-align:center}
+.wheel-badge.twin{background:#ff6f00}
+.wheel-badge small{display:block;font-size:11px;font-weight:400;opacity:.85;letter-spacing:1px}
+.corr-row{display:grid;grid-template-columns:130px 1fr 110px;gap:10px;align-items:center;margin:8px 0;font-size:13px}
+.corr-bar{background:#eceff1;border-radius:6px;height:16px;overflow:hidden}
+.corr-fill{height:100%;background:linear-gradient(90deg,#1a3a8f,#42a5f5);border-radius:6px}
+@media(max-width:560px){.corr-row{grid-template-columns:1fr}}
+footer{background:#263238;color:#cfd8dc;text-align:center;padding:24px 16px;font-size:13px;line-height:1.8}
+</style>
+</head>
+<body id="top">
+
+<header>
+  <h1>🎡 ANALISI STATISTICA CICLICA – RUOTA DI BARI</h1>
+  <div class="sub">Periodo: 10586 (25.01.2025) → 10909 (14.08.2026)</div>
+  <div class="statbar">
+    <div class="stat"><span>Ruota Principale</span><b>BARI</b></div>
+    <div class="stat"><span>Cicli Totali</span><b>18 (da 18 estraz.)</b></div>
+    <div class="stat"><span>Estrazioni Analizzate</span><b>324</b></div>
+    <div class="stat"><span>Ruota Gemella</span><b>CAGLIARI</b></div>
+  </div>
+</header>
+
+<div class="container">
+
+  <!-- ============ LEGENDA ============ -->
+  <h2 class="sez">📖 Significato degli indicatori</h2>
+  <div class="card">
+    <div class="legend-grid">
+      <div class="lg"><b>Ritardo</b> – Estrazioni trascorse dall'ultima uscita del numero.</div>
+      <div class="lg"><b>Rit.Max</b> – Massimo ritardo storico raggiunto nel periodo esaminato.</div>
+      <div class="lg"><b>Frequenza</b> – Quante volte il numero è uscito in totale nel periodo.</div>
+      <div class="lg"><b>SComp/Comp</b> – Scompenso/Compenso: differenza tra uscite attese e reali (negativo = in debito).</div>
+      <div class="lg"><b>Coperti</b> – In quanti cicli (su 18) il numero è uscito almeno una volta (indice di presenza).</div>
+      <div class="lg"><b>Media</b> – Media ciclica teorica di uscita (Tot.Estraz / Frequenza).</div>
+      <div class="lg"><b>FuoriRit</b> – Il ritardo attuale è il DOPPIO (o più) della sua media ciclica (forte anomalia).</div>
+      <div class="lg"><b>Trend</b> – Quante volte è uscito negli ultimi 5 cicli (Basso = in pausa).</div>
+      <div class="lg"><b>Gap</b> – Distanza attuale dal suo Ritardo Massimo storico (basso = vicino al record).</div>
+      <div class="lg"><b>Score</b> – Punteggio algoritmico (0-7). Più è alto, più rispetta i parametri di uscita.</div>
+      <div class="lg"><b>D.Max</b> – Record storico di cicli CONSECUTIVI senza uscita (Digiuno Massimo).</div>
+      <div class="lg"><b>D.Att</b> – Cicli consecutivi di assenza ATTUALI (quanto sta digiunando adesso).</div>
+      <div class="lg"><b>Urgenza</b> – Punteggio (0-3) di probabile uscita ENTRO 3 CICLI (3 = MASSIMA URGENZA).</div>
+      <div class="lg"><b>Mappa</b> – Storico visivo ultimi 4 cicli: <span class="mp o"></span> Estratto &nbsp; <span class="mp d"></span> Assente.</div>
+    </div>
+  </div>
+
+  <div class="card colorcode">
+    <b>🚨 CODICE COLORI E SIMBOLI DI ALLARME</b>
+    <ul>
+      <li><span class="swatch sw-red"></span><b>Testo ROSSO + *</b> → condizione critica o segnale statistico attivo:
+        <ul>
+          <li><b>Rit/RitMax *</b>: ritardo attuale UGUALE al massimo storico (record eguagliato).</li>
+          <li><b>SComp *</b>: valore negativo (numero fortemente in scompenso/debito).</li>
+          <li><b>FuoriRit *</b>: numero fuori ritmo (ritardo ≥ 2× la media).</li>
+          <li><b>Trend *</b>: numero in pausa (uscite ≤ 1 negli ultimi cicli).</li>
+          <li><b>Gap *</b>: a un passo dal record storico (Gap ≤ 3).</li>
+          <li><b>D.Max *</b>: digiuno ciclico storico critico (≥ 6 cicli consecutivi assente).</li>
+          <li><b>D.Att *</b>: COMPENSO CICLICO ATTIVO (D.Att ≥ D.Max − 1): numero maturo per uscire.</li>
+          <li><b>Urgenza *</b>: URGENZA 3 ATTIVA: altissima probabilità di uscita entro 3 cicli.</li>
+          <li><b>Score *</b>: punteggio ≥ 4 (candidato forte).</li>
+        </ul>
+      </li>
+      <li><span class="swatch sw-green"></span><b>Testo VERDE</b> → evidenzia il NUMERO MIGLIORE della decina o della classifica.</li>
+      <li><span class="swatch sw-yellow"></span><b>Riga Gialla</b> → riepilogo testuale di tutte le anomalie attive su quel numero.</li>
+    </ul>
+  </div>
+
+  <!-- ============ DECINE ============ -->
+  <h2 class="sez">🔢 Griglia completa per decina (01–90)</h2>
+  <nav id="chips"></nav>
+  <div id="decine"></div>
+
+  <!-- ============ TOP 10 ============ -->
+  <h2 class="sez">🏆 Classifica Top 10 assoluta – Ruota di Bari</h2>
+  <div class="card" style="padding:0;overflow:hidden">
+    <div class="table-scroll">
+      <table class="rank">
+        <thead><tr><th>Pos</th><th>Num</th><th>Scr/7</th><th>Rit.</th><th>Tr.</th><th>Gap</th><th>D.Mx</th><th>Urg.</th><th style="text-align:left">Note</th></tr></thead>
+        <tbody>
+          <tr class="top4"><td>01</td><td class="greentx">06</td><td><span class="scr hot">04/7</span></td><td>042</td><td>3/5</td><td>000</td><td>002</td><td>2/3</td><td style="text-align:left">RitMax FuoriRit Compenso</td></tr>
+          <tr class="top4"><td>02</td><td class="greentx">12</td><td><span class="scr hot">04/7</span></td><td>070</td><td>1/5</td><td>000</td><td>003</td><td>1/3</td><td style="text-align:left">RitMax FuoriRit Pausa Compenso</td></tr>
+          <tr class="top4"><td>03</td><td class="greentx">67</td><td><span class="scr hot">04/7</span></td><td>148</td><td>0/5</td><td>000</td><td>008</td><td>1/3</td><td style="text-align:left">RitMax FuoriRit Pausa Dig.Crit Compenso</td></tr>
+          <tr class="top4"><td>04</td><td class="greentx">85</td><td><span class="scr hot">04/7</span></td><td>038</td><td>3/5</td><td>000</td><td>002</td><td>2/3</td><td style="text-align:left">RitMax FuoriRit Compenso</td></tr>
+          <tr><td>05</td><td>21</td><td><span class="scr">03/7</span></td><td>073</td><td>1/5</td><td>028</td><td>005</td><td>1/3</td><td style="text-align:left">FuoriRit Pausa Compenso</td></tr>
+          <tr class="urg"><td>06</td><td><b>26</b></td><td><span class="scr">03/7</span></td><td>048</td><td>3/5</td><td>001</td><td>002</td><td class="redtx">3/3</td><td style="text-align:left" class="redtx">FuoriRit Vic.Rec Compenso <b>URG.MAX</b></td></tr>
+          <tr><td>07</td><td>37</td><td><span class="scr">03/7</span></td><td>016</td><td>4/5</td><td>015</td><td>001</td><td>2/3</td><td style="text-align:left">Compenso</td></tr>
+          <tr><td>08</td><td>51</td><td><span class="scr">03/7</span></td><td>037</td><td>3/5</td><td>004</td><td>002</td><td>2/3</td><td style="text-align:left">FuoriRit Compenso</td></tr>
+          <tr><td>09</td><td>07</td><td><span class="scr">03/7</span></td><td>034</td><td>3/5</td><td>015</td><td>002</td><td>2/3</td><td style="text-align:left">FuoriRit Compenso</td></tr>
+          <tr><td>10</td><td>04</td><td><span class="scr">03/7</span></td><td>052</td><td>2/5</td><td>000</td><td>002</td><td>2/3</td><td style="text-align:left">RitMax FuoriRit Compenso</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ============ DECINE CALDE ============ -->
+  <h2 class="sez">🔥 Classifica decine calde – Ruota di Bari</h2>
+  <div class="card" style="padding:0;overflow:hidden">
+    <div class="table-scroll">
+      <table class="rank">
+        <thead><tr><th>Pos</th><th>Range</th><th>ScoreTot</th><th>Cand</th><th style="text-align:left">Note</th></tr></thead>
+        <tbody>
+          <tr class="gold"><td>01</td><td><b>01-10</b></td><td><b>15</b></td><td>01</td><td style="text-align:left" class="greentx">&lt;&lt;&lt; DECINA PIU' MATURA</td></tr>
+          <tr><td>02</td><td>21-30</td><td>13</td><td>00</td><td style="text-align:left">-</td></tr>
+          <tr><td>03</td><td>31-40</td><td>13</td><td>00</td><td style="text-align:left">-</td></tr>
+          <tr><td>04</td><td>51-60</td><td>11</td><td>00</td><td style="text-align:left">-</td></tr>
+          <tr><td>05</td><td>41-50</td><td>10</td><td>00</td><td style="text-align:left">-</td></tr>
+          <tr><td>06</td><td>81-90</td><td>10</td><td>01</td><td style="text-align:left">-</td></tr>
+          <tr><td>07</td><td>11-20</td><td>09</td><td>01</td><td style="text-align:left">-</td></tr>
+          <tr><td>08</td><td>71-80</td><td>07</td><td>00</td><td style="text-align:left">-</td></tr>
+          <tr><td>09</td><td>61-70</td><td>06</td><td>01</td><td style="text-align:left">-</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ============ BACKTEST ============ -->
+  <h2 class="sez">🧪 Backtest: affidabilità entro 3 cicli</h2>
+  <div class="card">
+    <div class="small-note" style="margin-top:0"><b>Metodo:</b> se il segnale era attivo al ciclo C, si controlla l'uscita nei cicli C+1, C+2, C+3. La barra verticale scura indica il <b>riferimento BASE (94%)</b>: verde = il segnale batte la base, rosso = segnale debole sul medio termine.</div>
+    <div class="bt">
+      <div class="bt-row">
+        <div><b>COMPENSO CICLICO</b><span class="bt-badge g">≥ BASE ✓</span><br><small>773 eventi | 730 centri</small></div>
+        <div class="bt-bar"><div class="bt-fill green" style="width:94%"></div><div class="bt-mark" style="left:94%"></div></div>
+        <div class="bt-pct greentx">94%</div>
+      </div>
+      <div class="bt-row">
+        <div><b>TREND BASSO</b><span class="bt-badge r">&lt; BASE ✗</span><br><small>242 eventi | 225 centri</small></div>
+        <div class="bt-bar"><div class="bt-fill red" style="width:92%"></div><div class="bt-mark" style="left:94%"></div></div>
+        <div class="bt-pct redtx">92%</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ SUGGERITORE ============ -->
+  <h2 class="sez">🎯 Suggeritore di giocata (Target 3 estrazioni)</h2>
+  <div class="card sugg">
+    <h3>RUOTA DI BARI</h3>
+    <div class="sugg-row">
+      <div class="sugg-label">AMBATA<small>Score 4/7 | RitMax FuoriRit Compenso</small></div>
+      <div class="ballrow"><div class="ball">06</div></div>
+    </div>
+    <div class="sugg-row">
+      <div class="sugg-label">AMBO</div>
+      <div class="ballrow"><div class="ball">06</div><div class="ball">12</div></div>
+    </div>
+    <div class="sugg-row">
+      <div class="sugg-label">TERNO</div>
+      <div class="ballrow"><div class="ball">06</div><div class="ball">12</div><div class="ball">67</div></div>
+    </div>
+    <div class="sugg-row">
+      <div class="sugg-label">ALTERNATIVA<small>URGENZA MAX</small></div>
+      <div class="ballrow"><div class="ball silver">26</div></div>
+    </div>
+    <div class="disclaimer">⚠️ Nota: il Lotto è un gioco aleatorio; le statistiche non garantiscono vincite. Gioca sempre con moderazione e responsabilmente.</div>
+  </div>
+
+  <!-- ============ SCANNER MULTI-RUOTA ============ -->
+  <h2 class="sez">📡 Scanner multi-ruota e correlazione statistica</h2>
+  <div class="card">
+    <div class="gemella">
+      <div class="wheel-badge">BARI<small>RUOTA PRINCIPALE</small></div>
+      <div style="font-size:28px">⇄</div>
+      <div class="wheel-badge twin">CAGLIARI<small>RUOTA GEMELLA · divergenza 179</small></div>
+    </div>
+    <p style="font-size:13.5px;line-height:1.7;margin-bottom:16px"><b>Significato:</b> è la ruota che in questo periodo si comporta in modo più simile alla tua (stessi numeri caldi/freddi, stesse presenze recenti). I segnali forti su una tendono a riflettersi sull'altra: giocali su entrambe o usala come <b>RUOTA SPIA</b>.</p>
+    <b style="font-size:14px">CLASSIFICA CORRELAZIONE CON BARI (Top 3):</b>
+    <div style="margin-top:8px">
+      <div class="corr-row"><b>1. CAGLIARI</b><div class="corr-bar"><div class="corr-fill" style="width:70%"></div></div><span>divergenza 179</span></div>
+      <div class="corr-row"><b>2. NAPOLI</b><div class="corr-bar"><div class="corr-fill" style="width:57%"></div></div><span>divergenza 183</span></div>
+      <div class="corr-row"><b>3. MILANO</b><div class="corr-bar"><div class="corr-fill" style="width:33%"></div></div><span>divergenza 190</span></div>
+    </div>
+    <div class="small-note"><b>NUMERI D'ORO TRASVERSALI (Top 10 di BARI forti anche su CAGLIARI):</b> nessun numero trasversale: la Top 10 è specifica solo di BARI.</div>
+  </div>
+
+</div>
+
+<footer>
+  ✅ ANALISI COMPLETATA. Buona fortuna! 🍀<br>
+  <small>Il gioco è vietato ai minori di 18 anni e può causare dipendenza patologica. Gioca responsabilmente.</small>
+</footer>
+
+<script>
+const ROW_ORDER = ["Ritardo","Rit.Max","Frequenza","SComp/Comp","Esaminati","Coperti","Media","FuoriRit","Trend","Gap","Score","D.Max","Urgenza","Mappa"];
+
+const DECINE = [
+{range:"01-10",best:5,rows:{
+ "Ritardo":["007","003","003","052*","002","042*","034","027","015","001"],
+ "Rit.Max":["062","064","088","052*","068","042*","049","044","038","123"],
+ "Frequenza":["030","018","016","014","015","019","023","017","024","017"],
+ "SComp/Comp":["12","00","02*","04*","03*","01","05","01*","06","01*"],
+ "Esaminati":["018","018","018","018","018","018","018","018","018","018"],
+ "Coperti":["013","013","010","011","011","013","010","012","014","009"],
+ "Media":["010","018","020","023","021","017","014","019","013","019"],
+ "FuoriRit":["-","-","-","SI*","-","SI*","SI*","-","-","-"],
+ "Trend":["4/5","4/5","2/5","2/5","3/5","3/5","3/5","2/5","5/5","1/5*"],
+ "Gap":["055","061","085","000*","066","000*","015","017","023","122"],
+ "Score":["01","00","00","03","00","04*","03","01","02","01"],
+ "D.Max":["002","002","004","002","003","002","002","002","001","006*"],
+ "Urgenza":["1/3","1/3","1/3","2/3","1/3","2/3","2/3","2/3","2/3","0/3"],
+ "Mappa":[".OOO","O.OO","..OO",".O..","..OO","OO..",".OO.","O.O.","OOOO","...O"]},
+ summary:["Num 04 : Rit=RitMax FuoriRitmo Vicino al record COMPENSO CICLICO","Num 06 : Rit=RitMax FuoriRitmo Vicino al record Score alto COMPENSO CICLICO","** NUMERO MIGLIORE DECINA: 06 (Score 4/7)","Num 07 : FuoriRitmo COMPENSO CICLICO","Num 08 : COMPENSO CICLICO","Num 09 : COMPENSO CICLICO","Num 10 : Trend basso(pausa) DigiunoMax critico"]},
+
+{range:"11-20",best:1,rows:{
+ "Ritardo":["040","070*","004","000","013","004","003","029","008","058"],
+ "Rit.Max":["078","070*","069","067","053","056","065","053","049","135"],
+ "Frequenza":["011","015","012","020","011","016","017","015","018","007"],
+ "SComp/Comp":["07*","03*","06*","02","07*","02*","01*","03*","00","11*"],
+ "Esaminati":["018","018","018","018","018","018","018","018","018","018"],
+ "Coperti":["008","011","009","014","008","011","010","011","014","006"],
+ "Media":["029","021","027","016","029","020","019","021","018","046"],
+ "FuoriRit":["-","SI*","-","-","-","-","-","-","-","-"],
+ "Trend":["2/5","1/5*","2/5","5/5","3/5","4/5","3/5","2/5","4/5","1/5*"],
+ "Gap":["038","000*","065","067","040","052","062","024","041","077"],
+ "Score":["01","04*","00","01","00","00","00","01","01","01"],
+ "D.Max":["003","003","003","003","002","002","002","002","001","007*"],
+ "Urgenza":["2/3","1/3","1/3","1/3","1/3","1/3","1/3","2/3","2/3","0/3"],
+ "Mappa":[".O..","O...","O..O","OOOO","O..O","OOOO","O..O",".OO.",".OOO","O..."]},
+ summary:["Num 11 : COMPENSO CICLICO","Num 12 : Rit=RitMax FuoriRitmo Trend basso(pausa) Vicino al record Score alto COMPENSO CICLICO","** NUMERO MIGLIORE DECINA: 12 (Score 4/7)","Num 18 : COMPENSO CICLICO","Num 19 : COMPENSO CICLICO","Num 20 : Trend basso(pausa) DigiunoMax critico"]},
+
+{range:"21-30",best:null,rows:{
+ "Ritardo":["073","000","029","009","011","048","010","038","015","011"],
+ "Rit.Max":["101","045","086","068","051","049","095","048","043","048"],
+ "Frequenza":["015","027","016","027","017","014","019","018","018","016"],
+ "SComp/Comp":["03*","09","02*","09","01*","04*","01","00","00","02*"],
+ "Esaminati":["018","018","018","018","018","018","018","018","018","018"],
+ "Coperti":["008","015","011","012","012","010","009","010","013","011"],
+ "Media":["021","012","020","012","019","023","017","018","018","020"],
+ "FuoriRit":["SI*","-","-","-","-","SI*","-","SI*","-","-"],
+ "Trend":["1/5*","4/5","4/5","4/5","4/5","3/5","3/5","2/5","4/5","2/5"],
+ "Gap":["028","045","057","059","040","001*","085","010","028","037"],
+ "Score":["03","02","00","01","00","03","01","02","01","00"],
+ "D.Max":["005","001","004","003","002","002","005","002","001","002"],
+ "Urgenza":["1/3","2/3","1/3","1/3","1/3","3/3*","1/3","2/3","2/3","1/3"],
+ "Mappa":["....","OO.O","OOO.","O.OO",".OOO","OO..","..OO",".O..","OOOO","O..O"]},
+ summary:["Num 21 : FuoriRitmo Trend basso(pausa) COMPENSO CICLICO","Num 22 : COMPENSO CICLICO","Num 26 : FuoriRitmo Vicino al record COMPENSO CICLICO URGENZA 3 MASSIMA","Num 28 : FuoriRitmo COMPENSO CICLICO","Num 29 : COMPENSO CICLICO"]},
+
+{range:"31-40",best:null,rows:{
+ "Ritardo":["002","017","004","026","018","007","016","002","014","006"],
+ "Rit.Max":["079","055","055","045","045","049","031","055","050","038"],
+ "Frequenza":["023","017","026","020","019","019","025","015","020","021"],
+ "SComp/Comp":["05","01*","08","02","01","01","07","03*","02","03"],
+ "Esaminati":["018","018","018","018","018","018","018","018","018","018"],
+ "Coperti":["013","011","014","012","013","013","016","011","011","013"],
+ "Media":["014","019","012","016","017","017","012","021","016","015"],
+ "FuoriRit":["-","-","-","-","-","-","-","-","-","-"],
+ "Trend":["5/5","2/5","5/5","4/5","4/5","4/5","4/5","4/5","2/5","4/5"],
+ "Gap":["077","038","051","019","027","042","015","053","036","032"],
+ "Score":["01","00","01","02","02","01","03","00","01","02"],
+ "D.Max":["003","003","002","002","001","002","001","002","002","001"],
+ "Urgenza":["1/3","1/3","1/3","2/3","2/3","1/3","2/3","1/3","1/3","2/3"],
+ "Mappa":["OOOO","...O","OOOO","OOO.","OOO.","OO.O","OOOO","OO.O","O..O","OOOO"]},
+ summary:["Num 34 : COMPENSO CICLICO","Num 35 : COMPENSO CICLICO","Num 37 : COMPENSO CICLICO","Num 40 : COMPENSO CICLICO"]},
+
+{range:"41-50",best:null,rows:{
+ "Ritardo":["056","001","006","005","013","007","007","018","006","004"],
+ "Rit.Max":["118","065","037","045","051","112","054","089","040","040"],
+ "Frequenza":["010","022","020","017","019","015","024","017","025","022"],
+ "SComp/Comp":["08*","04","02","01*","01","03*","06","01*","07","04"],
+ "Esaminati":["018","018","018","018","018","018","018","018","018","018"],
+ "Coperti":["007","011","014","013","014","010","013","010","015","013"],
+ "Media":["032","014","016","019","017","021","013","019","012","014"],
+ "FuoriRit":["-","-","-","-","-","-","-","-","-","-"],
+ "Trend":["1/5*","4/5","3/5","5/5","2/5","4/5","3/5","1/5*","5/5","4/5"],
+ "Gap":["062","064","031","040","038","105","047","071","034","036"],
+ "Score":["01","01","02","00","01","00","01","01","02","01"],
+ "D.Max":["005","002","001","002","002","006*","002","004","001","002"],
+ "Urgenza":["0/3","1/3","2/3","1/3","1/3","1/3","1/3","0/3","2/3","1/3"],
+ "Mappa":["O...","O.OO","OO.O","OOOO",".O.O","OOOO","..OO","..O.","OOOO","OOOO"]},
+ summary:["Num 41 : Trend basso(pausa)","Num 43 : COMPENSO CICLICO","Num 46 : DigiunoMax critico","Num 48 : Trend basso(pausa)","Num 49 : COMPENSO CICLICO"]},
+
+{range:"51-60",best:null,rows:{
+ "Ritardo":["037","014","022","007","029","009","012","005","013","012"],
+ "Rit.Max":["041","075","055","044","078","075","035","048","057","058"],
+ "Frequenza":["020","019","020","022","017","014","016","014","021","016"],
+ "SComp/Comp":["02","01","02","04","01*","04*","02*","04*","03","02*"],
+ "Esaminati":["018","018","018","018","018","018","018","018","018","018"],
+ "Coperti":["012","013","011","013","008","010","014","010","013","010"],
+ "Media":["016","017","016","014","019","023","020","023","015","020"],
+ "FuoriRit":["SI*","-","-","-","-","-","-","-","-","-"],
+ "Trend":["3/5","4/5","3/5","4/5","1/5*","3/5","4/5","4/5","3/5","3/5"],
+ "Gap":["004","061","033","037","049","066","023","043","044","046"],
+ "Score":["03","01","02","02","01","00","01","00","01","00"],
+ "D.Max":["002","003","002","001","004","004","001","002","002","003"],
+ "Urgenza":["2/3","1/3","2/3","2/3","0/3","1/3","2/3","1/3","1/3","1/3"],
+ "Mappa":["OO..","O.OO",".OO.","O.OO","..O.",".OOO",".OOO","O.OO",".OOO","OO.O"]},
+ summary:["Num 51 : FuoriRitmo COMPENSO CICLICO","Num 53 : COMPENSO CICLICO","Num 54 : COMPENSO CICLICO","Num 55 : Trend basso(pausa)","Num 57 : COMPENSO CICLICO"]},
+
+{range:"61-70",best:6,rows:{
+ "Ritardo":["004","005","016","013","006","011","148*","009","010","001"],
+ "Rit.Max":["047","048","072","054","054","117","148*","049","049","063"],
+ "Frequenza":["017","018","013","018","018","015","011","023","019","017"],
+ "SComp/Comp":["01*","00","05*","00","00","03*","07*","05","01","01*"],
+ "Esaminati":["018","018","018","018","018","018","018","018","018","018"],
+ "Coperti":["011","011","008","012","012","012","007","013","012","010"],
+ "Media":["019","018","024","018","018","021","029","014","017","019"],
+ "FuoriRit":["-","-","-","-","-","-","SI*","-","-","-"],
+ "Trend":["4/5","3/5","3/5","3/5","4/5","2/5","0/5*","2/5","5/5","3/5"],
+ "Gap":["043","043","056","041","048","106","000*","040","039","062"],
+ "Score":["00","00","00","00","00","00","04*","01","01","00"],
+ "D.Max":["002","002","003","002","002","005","008*","002","002","002"],
+ "Urgenza":["1/3","1/3","1/3","1/3","1/3","1/3","1/3","1/3","1/3","1/3"],
+ "Mappa":["OOOO","..OO","O.OO","O..O","OO.O","..OO","....","O..O","OOOO","..OO"]},
+ summary:["Num 67 : Rit=RitMax FuoriRitmo Trend basso(pausa) Vicino al record Score alto DigiunoMax critico COMPENSO CICLICO","** NUMERO MIGLIORE DECINA: 67 (Score 4/7)"]},
+
+{range:"71-80",best:null,rows:{
+ "Ritardo":["020","001","000","000","031","013","006","003","002","010"],
+ "Rit.Max":["054","068","057","075","046","045","060","060","036","063"],
+ "Frequenza":["023","028","022","017","015","016","013","021","018","017"],
+ "SComp/Comp":["05","10","04","01*","03*","02*","05*","03","00","01*"],
+ "Esaminati":["018","018","018","018","018","018","018","018","018","018"],
+ "Coperti":["013","013","011","011","011","011","011","012","013","011"],
+ "Media":["014","011","014","019","021","020","024","015","018","019"],
+ "FuoriRit":["-","-","-","-","-","-","-","-","-","-"],
+ "Trend":["4/5","3/5","3/5","3/5","2/5","4/5","3/5","4/5","3/5","2/5"],
+ "Gap":["034","067","057","075","015","032","054","057","034","053"],
+ "Score":["02","01","01","00","01","00","00","01","01","00"],
+ "D.Max":["002","002","003","003","002","002","003","003","001","003"],
+ "Urgenza":["2/3","1/3","1/3","1/3","2/3","1/3","1/3","1/3","2/3","1/3"],
+ "Mappa":["OOO.","OO.O","OO.O",".OOO","..O.","OOOO",".OOO","OOOO",".O.O","...O"]},
+ summary:["Num 71 : COMPENSO CICLICO","Num 75 : COMPENSO CICLICO","Num 79 : COMPENSO CICLICO"]},
+
+{range:"81-90",best:4,rows:{
+ "Ritardo":["023","001","036","029","038*","008","000","017","020","021"],
+ "Rit.Max":["057","102","055","061","038*","065","057","071","054","076"],
+ "Frequenza":["022","013","013","013","019","020","020","016","015","013"],
+ "SComp/Comp":["04","05*","05*","05*","01","02","02","02*","03*","05*"],
+ "Esaminati":["018","018","018","018","018","018","018","018","018","018"],
+ "Coperti":["012","008","011","010","013","012","010","013","010","008"],
+ "Media":["014","024","024","024","017","016","016","020","021","024"],
+ "FuoriRit":["-","-","-","-","SI*","-","-","-","-","-"],
+ "Trend":["4/5","2/5","2/5","3/5","3/5","5/5","3/5","5/5","3/5","3/5"],
+ "Gap":["034","101","019","032","000*","057","057","054","034","055"],
+ "Score":["02","00","01","00","04*","01","01","00","01","00"],
+ "D.Max":["002","005","002","003","002","003","002","003","002","004"],
+ "Urgenza":["2/3","1/3","2/3","1/3","2/3","1/3","1/3","1/3","2/3","1/3"],
+ "Mappa":["OOO.","...O",".O..",".OO.","OO..","OOOO","OO.O","OOOO",".OO.","O.O."]},
+ summary:["Num 81 : COMPENSO CICLICO","Num 83 : COMPENSO CICLICO","Num 85 : Rit=RitMax FuoriRitmo Vicino al record Score alto COMPENSO CICLICO","** NUMERO MIGLIORE DECINA: 85 (Score 4/7)","Num 89 : COMPENSO CICLICO"]}
+];
+
+(function(){
+  const wrap = document.getElementById("decine");
+  const nav = document.getElementById("chips");
+  DECINE.forEach(d=>{
+    const start = parseInt(d.range.split("-")[0],10);
+    nav.innerHTML += `<a class="chip" href="#dec-${d.range}">${d.range}</a>`;
+    let h = `<div class="card decina-card" id="dec-${d.range}">
+      <div class="decina-title"><span class="decina-badge">DECINA ${d.range}</span>`;
+    if(d.best!==null) h += `<span class="best-badge">⭐ NUMERO MIGLIORE: ${String(start+d.best).padStart(2,"0")}</span>`;
+    h += `</div><div class="table-scroll"><table class="decina"><thead><tr><th class="rowlabel">INDICATORE</th>`;
+    for(let i=0;i<10;i++){
+      const n = String(start+i).padStart(2,"0");
+      h += `<th class="${i===d.best?"besthead":""}">${n}</th>`;
+    }
+    h += `</tr></thead><tbody>`;
+    ROW_ORDER.forEach(key=>{
+      const vals = d.rows[key];
+      const rc = key.replace(/[^\w]/g,"");
+      h += `<tr class="r-${rc}"><td class="rowlabel">${key}</td>`;
+      for(let i=0;i<10;i++){
+        const v = vals[i];
+        if(key==="Mappa"){
+          let dots="";
+          for(const ch of v) dots += (ch==="O") ? '<span class="mp o" title="Estratto"></span>' : '<span class="mp d" title="Assente"></span>';
+          h += `<td class="${i===d.best?"bestbg":""}">${dots}</td>`;
+        } else {
+          let cls=[];
+          if(i===d.best){cls.push("bestbg"); if(!v.endsWith("*")) cls.push("bestcell");}
+          if(v.endsWith("*")) cls.push("crit");
+          if(key==="Urgenza" && v==="3/3*") cls=["urgmax"];
+          h += `<td class="${cls.join(" ")}">${v}</td>`;
+        }
+      }
+      h += `</tr>`;
+    });
+    h += `</tbody></table></div><div class="summary">`;
+    d.summary.forEach(s=>{
+      if(s.indexOf("**")===0){
+        h += `<div class="sum-best">🏆 ${s.replace(/^\*\*\s*/,"")}</div>`;
+      } else {
+        h += `<div class="sum-item">➤ ${s}</div>`;
+      }
+    });
+    h += `</div></div>`;
+    wrap.innerHTML += h;
+  });
+})();
+</script>
+
+</body>
+</html>
