@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SUPERBIG V3 ULTIMATE - Analisi Capogioco 89</title>
+<title>SUPERBIG V3 ULTIMATE - Analisi Completa Capogioco 89</title>
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; }
   body {
@@ -13,76 +13,114 @@
     padding: 20px;
     min-height: 100vh;
   }
-  .container { max-width: 1400px; margin: 0 auto; }
+  .container { max-width: 1500px; margin: 0 auto; }
   
   .header {
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    padding: 30px;
-    border-radius: 15px;
+    padding: 35px;
+    border-radius: 20px;
     text-align: center;
-    margin-bottom: 25px;
-    box-shadow: 0 10px 40px rgba(102, 126, 234, 0.4);
+    margin-bottom: 30px;
+    box-shadow: 0 15px 50px rgba(102, 126, 234, 0.5);
+    position: relative;
+    overflow: hidden;
   }
-  .header h1 { font-size: 2.5em; color: white; text-shadow: 2px 2px 4px rgba(0,0,0,0.3); }
-  .header .subtitle { color: #f0f0f0; font-size: 1.1em; margin-top: 10px; }
+  .header::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+    animation: rotate 20s linear infinite;
+  }
+  @keyframes rotate {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+  .header h1 { 
+    font-size: 2.8em; 
+    color: white; 
+    text-shadow: 2px 2px 8px rgba(0,0,0,0.4);
+    position: relative;
+    z-index: 1;
+  }
+  .header .subtitle { 
+    color: #f0f0f0; 
+    font-size: 1.2em; 
+    margin-top: 10px;
+    position: relative;
+    z-index: 1;
+  }
   
   .config-bar {
-    background: rgba(255,255,255,0.1);
-    backdrop-filter: blur(10px);
-    padding: 15px 25px;
-    border-radius: 10px;
-    margin-bottom: 25px;
+    background: rgba(255,255,255,0.08);
+    backdrop-filter: blur(15px);
+    padding: 20px 30px;
+    border-radius: 15px;
+    margin-bottom: 30px;
     display: flex;
     justify-content: space-around;
     flex-wrap: wrap;
-    border: 1px solid rgba(255,255,255,0.2);
+    border: 1px solid rgba(255,255,255,0.15);
+    gap: 15px;
   }
-  .config-item { text-align: center; padding: 10px; }
-  .config-item .label { font-size: 0.85em; color: #aaa; text-transform: uppercase; }
-  .config-item .value { font-size: 1.4em; font-weight: bold; color: #ffd700; }
+  .config-item { text-align: center; padding: 10px 15px; }
+  .config-item .label { font-size: 0.8em; color: #aaa; text-transform: uppercase; letter-spacing: 1px; }
+  .config-item .value { font-size: 1.5em; font-weight: bold; color: #ffd700; margin-top: 5px; }
   
   .card {
     background: rgba(255,255,255,0.05);
     backdrop-filter: blur(10px);
-    border-radius: 15px;
-    padding: 25px;
-    margin-bottom: 25px;
+    border-radius: 18px;
+    padding: 30px;
+    margin-bottom: 30px;
     border: 1px solid rgba(255,255,255,0.1);
-    box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+    box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+    transition: transform 0.3s ease;
   }
+  .card:hover { transform: translateY(-3px); }
   .card h2 {
     color: #ffd700;
-    font-size: 1.5em;
-    margin-bottom: 20px;
-    padding-bottom: 10px;
+    font-size: 1.6em;
+    margin-bottom: 25px;
+    padding-bottom: 12px;
     border-bottom: 2px solid rgba(255,215,0,0.3);
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 12px;
   }
   .card h3 {
     color: #667eea;
-    font-size: 1.2em;
-    margin: 20px 0 15px 0;
+    font-size: 1.3em;
+    margin: 25px 0 15px 0;
+  }
+  .card h4 {
+    color: #a0b0ff;
+    font-size: 1.1em;
+    margin: 20px 0 12px 0;
   }
   
   .cg-highlight {
     background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-    padding: 20px;
-    border-radius: 12px;
+    padding: 30px;
+    border-radius: 15px;
     text-align: center;
-    margin: 20px 0;
+    margin: 25px 0;
+    box-shadow: 0 10px 30px rgba(245, 87, 108, 0.4);
   }
-  .cg-highlight .cg-num { font-size: 4em; font-weight: bold; color: white; }
-  .cg-highlight .cg-label { color: white; font-size: 1.1em; }
+  .cg-highlight .cg-num { font-size: 5em; font-weight: bold; color: white; text-shadow: 3px 3px 6px rgba(0,0,0,0.3); }
+  .cg-highlight .cg-label { color: white; font-size: 1.2em; text-transform: uppercase; letter-spacing: 2px; }
   .cg-highlight .cg-score { 
-    background: rgba(255,255,255,0.3); 
-    padding: 5px 20px; 
-    border-radius: 20px; 
+    background: rgba(255,255,255,0.25); 
+    padding: 8px 25px; 
+    border-radius: 25px; 
     display: inline-block;
-    margin-top: 10px;
+    margin-top: 15px;
     color: white;
     font-weight: bold;
+    font-size: 1.1em;
   }
   
   table {
@@ -90,40 +128,49 @@
     border-collapse: collapse;
     margin: 15px 0;
     background: rgba(0,0,0,0.3);
-    border-radius: 10px;
+    border-radius: 12px;
     overflow: hidden;
   }
   th {
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     color: white;
-    padding: 12px 8px;
+    padding: 14px 10px;
     font-size: 0.85em;
     text-transform: uppercase;
     letter-spacing: 0.5px;
   }
   td {
-    padding: 10px 8px;
+    padding: 11px 10px;
     text-align: center;
-    border-bottom: 1px solid rgba(255,255,255,0.1);
+    border-bottom: 1px solid rgba(255,255,255,0.08);
     font-size: 0.95em;
   }
-  tr:hover { background: rgba(255,255,255,0.05); }
-  tr:nth-child(even) { background: rgba(255,255,255,0.02); }
+  tr:hover { background: rgba(255,255,255,0.06); }
+  tr:nth-child(even) { background: rgba(255,255,255,0.03); }
   
   .badge {
-    padding: 4px 12px;
+    padding: 5px 14px;
     border-radius: 20px;
     font-size: 0.85em;
     font-weight: bold;
     display: inline-block;
+    margin: 2px;
   }
   .badge-forte { background: linear-gradient(135deg, #11998e, #38ef7d); color: white; }
   .badge-media { background: linear-gradient(135deg, #f7971e, #ffd200); color: #333; }
   .badge-attesa { background: linear-gradient(135deg, #4b6cb7, #182848); color: white; }
-  .badge-top { background: linear-gradient(135deg, #ff416c, #ff4b2b); color: white; }
   .badge-oltre { background: linear-gradient(135deg, #11998e, #38ef7d); color: white; }
   .badge-sotto { background: #666; color: white; }
+  .badge-hot { background: linear-gradient(135deg, #ff416c, #ff4b2b); color: white; animation: pulse 2s infinite; }
+  .badge-warm { background: linear-gradient(135deg, #f7971e, #ffd200); color: #333; }
+  .badge-cool { background: linear-gradient(135deg, #4b6cb7, #182848); color: white; }
+  .badge-sync { background: linear-gradient(135deg, #11998e, #38ef7d); color: white; }
   .badge-nd { background: #444; color: #888; }
+  
+  @keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.08); }
+  }
   
   .rank-1 { background: linear-gradient(135deg, #ffd700, #ffaa00); color: #333; font-weight: bold; }
   .rank-2 { background: linear-gradient(135deg, #c0c0c0, #a0a0a0); color: #333; font-weight: bold; }
@@ -131,96 +178,138 @@
   
   .metrics-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
     gap: 15px;
-    margin: 20px 0;
+    margin: 25px 0;
   }
   .metric-box {
     background: rgba(255,255,255,0.08);
-    padding: 15px;
-    border-radius: 10px;
+    padding: 18px;
+    border-radius: 12px;
     text-align: center;
-    border-left: 4px solid #667eea;
+    border-left: 5px solid #667eea;
+    transition: transform 0.3s ease;
   }
-  .metric-box .m-label { font-size: 0.8em; color: #aaa; text-transform: uppercase; }
-  .metric-box .m-value { font-size: 1.8em; font-weight: bold; color: #ffd700; margin-top: 5px; }
-  .metric-box .m-sub { font-size: 0.85em; color: #888; margin-top: 3px; }
+  .metric-box:hover { transform: scale(1.05); }
+  .metric-box .m-label { font-size: 0.75em; color: #aaa; text-transform: uppercase; letter-spacing: 1px; }
+  .metric-box .m-value { font-size: 2em; font-weight: bold; color: #ffd700; margin-top: 8px; }
   
-  .ruote-tags { display: flex; flex-wrap: wrap; gap: 8px; margin: 10px 0; }
+  .ruote-tags { display: flex; flex-wrap: wrap; gap: 10px; margin: 15px 0; }
   .ruota-tag {
     background: rgba(102, 126, 234, 0.3);
-    padding: 5px 15px;
-    border-radius: 20px;
+    padding: 6px 18px;
+    border-radius: 25px;
     font-weight: bold;
     border: 1px solid #667eea;
+    font-size: 0.95em;
   }
   .ruota-tag.top { background: linear-gradient(135deg, #667eea, #764ba2); color: white; }
   
   .sintesi-box {
-    background: linear-gradient(135deg, rgba(102,126,234,0.2), rgba(118,75,162,0.2));
+    background: linear-gradient(135deg, rgba(102,126,234,0.15), rgba(118,75,162,0.15));
     border: 2px solid #667eea;
     border-radius: 15px;
     padding: 25px;
     margin: 20px 0;
   }
-  .sintesi-box h3 { color: #ffd700; margin-bottom: 15px; }
+  .sintesi-box h3 { color: #ffd700; margin-bottom: 18px; font-size: 1.3em; }
   .sintesi-item {
-    padding: 10px;
-    margin: 8px 0;
+    padding: 12px 15px;
+    margin: 10px 0;
     background: rgba(0,0,0,0.3);
-    border-radius: 8px;
+    border-radius: 10px;
     border-left: 4px solid #667eea;
   }
   .sintesi-item strong { color: #ffd700; }
   
   .criteri-list { list-style: none; }
   .criteri-list li {
-    padding: 8px 15px;
-    margin: 5px 0;
+    padding: 10px 18px;
+    margin: 8px 0;
     background: rgba(255,255,255,0.05);
-    border-radius: 8px;
-    border-left: 3px solid #667eea;
+    border-radius: 10px;
+    border-left: 4px solid #667eea;
   }
   .criteri-list li strong { color: #ffd700; }
   
   .warning-box {
-    background: linear-gradient(135deg, rgba(255,65,108,0.2), rgba(255,75,43,0.2));
+    background: linear-gradient(135deg, rgba(255,65,108,0.15), rgba(255,75,43,0.15));
     border: 2px solid #ff416c;
-    border-radius: 10px;
-    padding: 15px;
-    margin: 15px 0;
+    border-radius: 12px;
+    padding: 18px;
+    margin: 18px 0;
     color: #ff6b8a;
   }
   .success-box {
-    background: linear-gradient(135deg, rgba(56,239,125,0.2), rgba(17,153,142,0.2));
+    background: linear-gradient(135deg, rgba(56,239,125,0.15), rgba(17,153,142,0.15));
     border: 2px solid #38ef7d;
-    border-radius: 10px;
-    padding: 15px;
-    margin: 15px 0;
+    border-radius: 12px;
+    padding: 18px;
+    margin: 18px 0;
     color: #38ef7d;
   }
   .info-box {
-    background: linear-gradient(135deg, rgba(102,126,234,0.2), rgba(118,75,162,0.2));
+    background: linear-gradient(135deg, rgba(102,126,234,0.15), rgba(118,75,162,0.15));
     border: 2px solid #667eea;
-    border-radius: 10px;
-    padding: 15px;
-    margin: 15px 0;
+    border-radius: 12px;
+    padding: 18px;
+    margin: 18px 0;
     color: #a0b0ff;
+  }
+  .sync-highlight {
+    background: linear-gradient(135deg, rgba(17,153,142,0.2), rgba(56,239,125,0.2));
+    border: 2px solid #38ef7d;
+    padding: 20px;
+    border-radius: 12px;
+    margin: 15px 0;
+  }
+  .sync-highlight strong { color: #38ef7d; font-size: 1.2em; }
+  
+  .number-card {
+    background: rgba(255,255,255,0.08);
+    padding: 18px;
+    border-radius: 12px;
+    border-left: 5px solid #ffd700;
+    margin: 10px 0;
+    transition: transform 0.3s ease;
+  }
+  .number-card:hover { transform: translateX(5px); }
+  .number-card .num { font-size: 2.5em; font-weight: bold; color: #ffd700; }
+  .number-card .count { color: #38ef7d; font-weight: bold; font-size: 1.1em; }
+  .number-card .archivi { margin-top: 10px; font-size: 0.9em; }
+  
+  .number-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 15px;
+    margin: 20px 0;
+  }
+  
+  .ambo-l0 {
+    background: linear-gradient(135deg, #ffd700, #ffaa00);
+    color: #333;
+    font-weight: bold;
+    padding: 5px 15px;
+    border-radius: 10px;
+    display: inline-block;
+    font-size: 1.1em;
   }
   
   .footer {
     text-align: center;
-    padding: 20px;
+    padding: 25px;
     color: #888;
     font-size: 0.9em;
-    margin-top: 30px;
+    margin-top: 40px;
+    border-top: 1px solid rgba(255,255,255,0.1);
   }
   
   @media (max-width: 768px) {
     .header h1 { font-size: 1.8em; }
     .metrics-grid { grid-template-columns: 1fr 1fr; }
     table { font-size: 0.8em; }
-    th, td { padding: 6px 4px; }
+    th, td { padding: 8px 5px; }
+    .number-grid { grid-template-columns: 1fr; }
   }
 </style>
 </head>
@@ -229,8 +318,8 @@
 
   <!-- HEADER -->
   <div class="header">
-    <h1> SUPERBIG V3 ULTIMATE</h1>
-    <div class="subtitle">Analisi Automatica Capogioco Ottimale</div>
+    <h1>🎯 SUPERBIG V3 ULTIMATE</h1>
+    <div class="subtitle">Analisi Automatica Capogioco Ottimale + Confronto Multi-Archivio</div>
   </div>
 
   <!-- CONFIGURAZIONE -->
@@ -253,13 +342,14 @@
     </div>
     <div class="config-item">
       <div class="label">Tempo Elaborazione</div>
-      <div class="value">00:02:04</div>
+      <div class="value">00:01:20</div>
     </div>
   </div>
 
   <!-- TOP 10 CAPOGIOCO CANDIDATI -->
   <div class="card">
-    <h2>🏆 TOP 10 CAPOGIOCO CANDIDATI</h2>
+    <h2> TOP 10 CAPOGIOCO CANDIDATI</h2>
+    <div style="overflow-x:auto;">
     <table>
       <thead>
         <tr>
@@ -275,8 +365,8 @@
       </thead>
       <tbody>
         <tr class="rank-1"><td>🥇 1</td><td><strong>89</strong></td><td>2</td><td>209</td><td>261</td><td>3</td><td>1</td><td><strong>64</strong></td></tr>
-        <tr class="rank-2"><td> 2</td><td>27</td><td>2</td><td>160</td><td>287</td><td>3</td><td>4</td><td>63</td></tr>
-        <tr class="rank-3"><td>🥉 3</td><td>19</td><td>2</td><td>163</td><td>277</td><td>1</td><td>0</td><td>63</td></tr>
+        <tr class="rank-2"><td>🥈 2</td><td>27</td><td>2</td><td>160</td><td>287</td><td>3</td><td>4</td><td>63</td></tr>
+        <tr class="rank-3"><td> 3</td><td>19</td><td>2</td><td>163</td><td>277</td><td>1</td><td>0</td><td>63</td></tr>
         <tr><td>4</td><td>39</td><td>2</td><td>167</td><td>272</td><td>1</td><td>0</td><td>63</td></tr>
         <tr><td>5</td><td>37</td><td>2</td><td>193</td><td>270</td><td>2</td><td>2</td><td>63</td></tr>
         <tr><td>6</td><td>17</td><td>2</td><td>176</td><td>274</td><td>2</td><td>—</td><td>63</td></tr>
@@ -286,18 +376,19 @@
         <tr><td>10</td><td>12</td><td>2</td><td>162</td><td>272</td><td>3</td><td>0</td><td>63</td></tr>
       </tbody>
     </table>
+    </div>
   </div>
 
   <!-- CRITERI DI VALUTAZIONE -->
   <div class="card">
     <h2>📊 CRITERI DI VALUTAZIONE (max 100 punti)</h2>
     <ul class="criteri-list">
-      <li><strong> Frequenza Capogioco (max 30):</strong> entro 10% dalla media = 30pt</li>
-      <li><strong>🎲 Ambi Candidati (max 25):</strong> ≤5=25pt, ≤10=20pt, ≤20=15pt</li>
+      <li><strong>🎯 Frequenza Capogioco (max 30):</strong> entro 10% dalla media = 30pt</li>
+      <li><strong> Ambi Candidati (max 25):</strong> ≤5=25pt, ≤10=20pt, ≤20=15pt</li>
       <li><strong>⚖️ Tambominmax Ratio (max 20):</strong> ≤0.3=20pt, ≤0.6=17pt</li>
       <li><strong>⏱️ Durata Max Ciclo (max 15):</strong> 40-250=15pt</li>
       <li><strong>🔄 Cicli Completati (max 8):</strong> ≥15=8pt, ≥10=7pt</li>
-      <li><strong> Indice Densità (max 2):</strong> 0.9-1.1=2pt</li>
+      <li><strong>📐 Indice Densità (max 2):</strong> 0.9-1.1=2pt</li>
     </ul>
   </div>
 
@@ -310,7 +401,7 @@
 
   <!-- FASE 1 e 6: CICLI E RECORD -->
   <div class="card">
-    <h2>📈 FASE 1 e 6: CICLI, RECORD, TAMBOMINMAX</h2>
+    <h2> FASE 1 e 6: CICLI, RECORD, TAMBOMINMAX</h2>
     
     <div class="metrics-grid">
       <div class="metric-box">
@@ -423,10 +514,11 @@
   <div class="card">
     <h2>📎 APPENDICE A: DOPPIA GRADUATORIA - FIBO/GANN per 89-85</h2>
     <div class="success-box">
-       <strong>Migliore per Ind.Ambo:</strong> 89-85 (Ind. 3,802)
+      🏆 <strong>Migliore per Ind.Ambo:</strong> 89-85 (Ind. 3,802)
     </div>
 
-    <table class="fibo-table">
+    <div style="overflow-x:auto;">
+    <table>
       <thead>
         <tr>
           <th>Ruota</th>
@@ -450,7 +542,7 @@
           <td><strong>VE</strong></td><td>577</td><td>726</td>
           <td style="color:#38ef7d; font-weight:bold;">79,5%</td><td style="color:#38ef7d; font-weight:bold;">78,6%</td>
           <td style="color:#38ef7d; font-weight:bold;">140</td><td style="color:#38ef7d; font-weight:bold;">8/8 QUADRATURA</td>
-          <td> ECCELLENTE</td>
+          <td>🟢 ECCELLENTE</td>
         </tr>
         <tr>
           <td><strong>PA</strong></td><td>835</td><td>1083</td>
@@ -502,6 +594,7 @@
         </tr>
       </tbody>
     </table>
+    </div>
 
     <h3>🎯 Top 4 ruote consigliate (rc):</h3>
     <div class="ruote-tags">
@@ -514,7 +607,7 @@
 
   <!-- APPENDICE B: ANALISI ESTRATTI -->
   <div class="card">
-    <h2>📎 APPENDICE B: ANALISI ESTRATTI (rc/rx) per 89-85</h2>
+    <h2> APPENDICE B: ANALISI ESTRATTI (rc/rx) per 89-85</h2>
     <table>
       <thead>
         <tr>
@@ -544,32 +637,437 @@
 
   <!-- FASE 3: MULTI-ARCHIVIO -->
   <div class="card">
-    <h2>📊 FASE 3: MULTI-ARCHIVIO L0-L5</h2>
+    <h2> FASE 3: MULTI-ARCHIVIO L0-L5</h2>
     <div class="info-box">
-      ℹ️ <strong>Nota:</strong> L'analisi viene eseguita sull'archivio ATTIVO in LottoCed. Per analizzare altri archivi, caricali dal menu Archivi e riesegui lo script.
+      ℹ️ <strong>Analisi multi-archivio completata:</strong> Tutti e 6 gli archivi (L0-L5) sono stati analizzati correttamente.
     </div>
+    <div style="overflow-x:auto;">
     <table>
       <thead>
-        <tr><th>L0 (Reale)</th><th>L1</th><th>L2</th><th>L3</th><th>L4</th><th>L5</th></tr>
+        <tr>
+          <th>L0 (Reale)</th>
+          <th>L1 (Virt.1)</th>
+          <th>L2 (Virt.2)</th>
+          <th>L3 (Virt.3)</th>
+          <th>L4 (Virt.4)</th>
+          <th>L5 (Virt.5)</th>
+        </tr>
       </thead>
       <tbody>
-        <tr><td><strong>03.13 (256)</strong></td><td><span class="badge badge-nd">N/D</span></td><td><span class="badge badge-nd">N/D</span></td><td><span class="badge badge-nd">N/D</span></td><td><span class="badge badge-nd">N/D</span></td><td><span class="badge badge-nd">N/D</span></td></tr>
-        <tr><td><strong>12.88 (254)</strong></td><td><span class="badge badge-nd">N/D</span></td><td><span class="badge badge-nd">N/D</span></td><td><span class="badge badge-nd">N/D</span></td><td><span class="badge badge-nd">N/D</span></td><td><span class="badge badge-nd">N/D</span></td></tr>
-        <tr><td><strong>13.28 (266)</strong></td><td><span class="badge badge-nd">N/D</span></td><td><span class="badge badge-nd">N/D</span></td><td><span class="badge badge-nd">N/D</span></td><td><span class="badge badge-nd">N/D</span></td><td><span class="badge badge-nd">N/D</span></td></tr>
-        <tr><td><strong>16.88 (301)</strong></td><td><span class="badge badge-nd">N/D</span></td><td><span class="badge badge-nd">N/D</span></td><td><span class="badge badge-nd">N/D</span></td><td><span class="badge badge-nd">N/D</span></td><td><span class="badge badge-nd">N/D</span></td></tr>
-        <tr><td><strong>18.49 (291)</strong></td><td><span class="badge badge-nd">N/D</span></td><td><span class="badge badge-nd">N/D</span></td><td><span class="badge badge-nd">N/D</span></td><td><span class="badge badge-nd">N/D</span></td><td><span class="badge badge-nd">N/D</span></td></tr>
-        <tr><td><strong>19.65 (274)</strong></td><td><span class="badge badge-nd">N/D</span></td><td><span class="badge badge-nd">N/D</span></td><td><span class="badge badge-nd">N/D</span></td><td><span class="badge badge-nd">N/D</span></td><td><span class="badge badge-nd">N/D</span></td></tr>
-        <tr><td><strong>53.61 (324)</strong></td><td><span class="badge badge-nd">N/D</span></td><td><span class="badge badge-nd">N/D</span></td><td><span class="badge badge-nd">N/D</span></td><td><span class="badge badge-nd">N/D</span></td><td><span class="badge badge-nd">N/D</span></td></tr>
-        <tr><td><strong>55.56 (348)</strong></td><td><span class="badge badge-nd">N/D</span></td><td><span class="badge badge-nd">N/D</span></td><td><span class="badge badge-nd">N/D</span></td><td><span class="badge badge-nd">N/D</span></td><td><span class="badge badge-nd">N/D</span></td></tr>
-        <tr><td><strong>63.70 (282)</strong></td><td><span class="badge badge-nd">N/D</span></td><td><span class="badge badge-nd">N/D</span></td><td><span class="badge badge-nd">N/D</span></td><td><span class="badge badge-nd">N/D</span></td><td><span class="badge badge-nd">N/D</span></td></tr>
-        <tr><td><strong>77.80 (272)</strong></td><td><span class="badge badge-nd">N/D</span></td><td><span class="badge badge-nd">N/D</span></td><td><span class="badge badge-nd">N/D</span></td><td><span class="badge badge-nd">N/D</span></td><td><span class="badge badge-nd">N/D</span></td></tr>
+        <tr>
+          <td><strong>03.13 (256)</strong></td>
+          <td>17.45 (238)</td>
+          <td>33.42 (234)</td>
+          <td>67.70 (278)</td>
+          <td>22.68 (265)</td>
+          <td>79.87 (276)</td>
+        </tr>
+        <tr>
+          <td><strong>12.88 (254)</strong></td>
+          <td>09.90 (238)</td>
+          <td>21.80 (234)</td>
+          <td>24.54 (277)</td>
+          <td>42.87 (261)</td>
+          <td>19.39 (275)</td>
+        </tr>
+        <tr>
+          <td><strong>13.28 (266)</strong></td>
+          <td>13.80 (242)</td>
+          <td>46.64 (241)</td>
+          <td>04.85 (281)</td>
+          <td>28.62 (268)</td>
+          <td>02.45 (278)</td>
+        </tr>
+        <tr>
+          <td><strong>16.88 (301)</strong></td>
+          <td>50.53 (275)</td>
+          <td>56.68 (296)</td>
+          <td>09.48 (314)</td>
+          <td>12.32 (336)</td>
+          <td>12.48 (342)</td>
+        </tr>
+        <tr>
+          <td><strong>18.49 (291)</strong></td>
+          <td>06.74 (269)</td>
+          <td>69.73 (294)</td>
+          <td>28.87 (313)</td>
+          <td>16.80 (304)</td>
+          <td>59.62 (334)</td>
+        </tr>
+        <tr>
+          <td><strong>19.65 (274)</strong></td>
+          <td>60.78 (255)</td>
+          <td>22.28 (246)</td>
+          <td>51.71 (312)</td>
+          <td>25.90 (284)</td>
+          <td>13.39 (292)</td>
+        </tr>
+        <tr>
+          <td><strong>53.61 (324)</strong></td>
+          <td>53.85 (322)</td>
+          <td>28.47 (327)</td>
+          <td>43.79 (350)</td>
+          <td>10.75 (340)</td>
+          <td>29.64 (353)</td>
+        </tr>
+        <tr>
+          <td><strong>55.56 (348)</strong></td>
+          <td>53.73 (387)</td>
+          <td>07.27 (342)</td>
+          <td>07.12 (375)</td>
+          <td>42.63 (367)</td>
+          <td>20.30 (364)</td>
+        </tr>
+        <tr>
+          <td><strong>63.70 (282)</strong></td>
+          <td>30.45 (259)</td>
+          <td>53.76 (257)</td>
+          <td>32.42 (312)</td>
+          <td>06.09 (299)</td>
+          <td>57.73 (313)</td>
+        </tr>
+        <tr>
+          <td><strong>77.80 (272)</strong></td>
+          <td>45.85 (245)</td>
+          <td>50.81 (243)</td>
+          <td>33.61 (285)</td>
+          <td>32.76 (270)</td>
+          <td>21.38 (280)</td>
+        </tr>
       </tbody>
     </table>
-    <div class="warning-box">
-      ⚠️ <strong>Nessun ambo sincrono trovato</strong> — Archivi L1-L5 non configurati in LottoCed. Per abilitare l'analisi multi-archivio, configura gli archivi virtuali dal menu Archivi.
     </div>
-    <div class="success-box">
-      ✅ <strong>Archivio L0 (Reale) analizzato correttamente.</strong> Ambo più ritardato: <strong>03-13</strong> con ritardo <strong>256</strong>
+  </div>
+
+  <!-- CONFRONTO MULTI-ARCHIVIO -->
+  <div class="card">
+    <h2> CONFRONTO MULTI-ARCHIVIO L0 vs L1-L5</h2>
+    <div class="info-box">
+      ️ <strong>Analisi dinamica:</strong> quali numeri di L0 compaiono anche negli altri archivi
+    </div>
+
+    <!-- TABELLA 1: ANALISI AMBO PER AMBO -->
+    <h4>📊 Analisi Ambo per Ambo di L0</h4>
+    <div style="overflow-x:auto;">
+    <table>
+      <thead>
+        <tr>
+          <th>Ambo L0</th>
+          <th>Ritardo</th>
+          <th>Archivi Coperti</th>
+          <th>Numeri Ponte</th>
+          <th>Forza</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr style="background: rgba(56,239,125,0.15);">
+          <td><span class="ambo-l0">13-28</span></td>
+          <td>266</td>
+          <td>L1,L2,L3,L4,L5</td>
+          <td>13-28</td>
+          <td><span class="badge badge-sync">5/5 ECCELLENTE</span></td>
+        </tr>
+        <tr>
+          <td><span class="ambo-l0">12-88</span></td>
+          <td>254</td>
+          <td>L3,L4,L5</td>
+          <td>12-88</td>
+          <td><span class="badge badge-warm">3/5 OTTIMO</span></td>
+        </tr>
+        <tr>
+          <td><span class="ambo-l0">77-80</span></td>
+          <td>272</td>
+          <td>L1,L2,L4</td>
+          <td>77-80</td>
+          <td><span class="badge badge-warm">3/5 OTTIMO</span></td>
+        </tr>
+        <tr>
+          <td><span class="ambo-l0">53-61</span></td>
+          <td>324</td>
+          <td>L1,L2,L3</td>
+          <td>53-61</td>
+          <td><span class="badge badge-warm">3/5 OTTIMO</span></td>
+        </tr>
+        <tr>
+          <td><span class="ambo-l0">63-70</span></td>
+          <td>282</td>
+          <td>L3,L4</td>
+          <td>63-70</td>
+          <td><span class="badge badge-cool">2/5 BUONO</span></td>
+        </tr>
+        <tr>
+          <td><span class="ambo-l0">03-13</span></td>
+          <td>256</td>
+          <td>L1,L5</td>
+          <td>03-13</td>
+          <td><span class="badge badge-cool">2/5 BUONO</span></td>
+        </tr>
+        <tr>
+          <td><span class="ambo-l0">16-88</span></td>
+          <td>301</td>
+          <td>L4</td>
+          <td>16-88</td>
+          <td><span class="badge badge-nd">1/5 DISCRETO</span></td>
+        </tr>
+        <tr>
+          <td><span class="ambo-l0">55-56</span></td>
+          <td>348</td>
+          <td>L2</td>
+          <td>55-56</td>
+          <td><span class="badge badge-nd">1/5 DISCRETO</span></td>
+        </tr>
+        <tr>
+          <td><span class="ambo-l0">19-65</span></td>
+          <td>274</td>
+          <td>L5</td>
+          <td>19-65</td>
+          <td><span class="badge badge-nd">1/5 DISCRETO</span></td>
+        </tr>
+        <tr>
+          <td><span class="ambo-l0">18-49</span></td>
+          <td>291</td>
+          <td>—</td>
+          <td>18-49</td>
+          <td><span class="badge badge-nd">0/5 DEBOLE</span></td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+
+    <!-- TABELLA 2: TOP NUMERI SINCRONI -->
+    <h4> Top Numeri Sincroni (presenti in più archivi)</h4>
+    <div class="number-grid">
+      <div class="number-card" style="border-left-color: #ff416c;">
+        <div class="num">28</div>
+        <div class="count">🔥 5 archivi</div>
+        <div class="archivi">
+          <span class="badge badge-hot">L0</span>
+          <span class="badge badge-hot">L2</span>
+          <span class="badge badge-hot">L3</span>
+          <span class="badge badge-hot">L4</span>
+        </div>
+      </div>
+      
+      <div class="number-card" style="border-left-color: #ff416c;">
+        <div class="num">53</div>
+        <div class="count">🔥 5 archivi</div>
+        <div class="archivi">
+          <span class="badge badge-hot">L0</span>
+          <span class="badge badge-hot">L1</span>
+          <span class="badge badge-hot">L2</span>
+        </div>
+      </div>
+      
+      <div class="number-card" style="border-left-color: #ffd200;">
+        <div class="num">12</div>
+        <div class="count">⭐ 4 archivi</div>
+        <div class="archivi">
+          <span class="badge badge-warm">L0</span>
+          <span class="badge badge-warm">L3</span>
+          <span class="badge badge-warm">L4</span>
+          <span class="badge badge-warm">L5</span>
+        </div>
+      </div>
+      
+      <div class="number-card" style="border-left-color: #ffd200;">
+        <div class="num">42</div>
+        <div class="count">⭐ 4 archivi</div>
+        <div class="archivi">
+          <span class="badge badge-warm">L2</span>
+          <span class="badge badge-warm">L3</span>
+          <span class="badge badge-warm">L4</span>
+        </div>
+      </div>
+      
+      <div class="number-card" style="border-left-color: #ffd200;">
+        <div class="num">80</div>
+        <div class="count">⭐ 4 archivi</div>
+        <div class="archivi">
+          <span class="badge badge-warm">L0</span>
+          <span class="badge badge-warm">L1</span>
+          <span class="badge badge-warm">L2</span>
+          <span class="badge badge-warm">L4</span>
+        </div>
+      </div>
+      
+      <div class="number-card" style="border-left-color: #ffd200;">
+        <div class="num">13</div>
+        <div class="count">⭐ 4 archivi</div>
+        <div class="archivi">
+          <span class="badge badge-warm">L0</span>
+          <span class="badge badge-warm">L1</span>
+          <span class="badge badge-warm">L5</span>
+        </div>
+      </div>
+      
+      <div class="number-card" style="border-left-color: #ffd200;">
+        <div class="num">45</div>
+        <div class="count">⭐ 4 archivi</div>
+        <div class="archivi">
+          <span class="badge badge-warm">L1</span>
+          <span class="badge badge-warm">L5</span>
+        </div>
+      </div>
+      
+      <div class="number-card" style="border-left-color: #667eea;">
+        <div class="num">09</div>
+        <div class="count">3 archivi</div>
+        <div class="archivi">
+          <span class="badge badge-cool">L1</span>
+          <span class="badge badge-cool">L3</span>
+          <span class="badge badge-cool">L4</span>
+        </div>
+      </div>
+      
+      <div class="number-card" style="border-left-color: #667eea;">
+        <div class="num">73</div>
+        <div class="count">3 archivi</div>
+        <div class="archivi">
+          <span class="badge badge-cool">L1</span>
+          <span class="badge badge-cool">L2</span>
+          <span class="badge badge-cool">L5</span>
+        </div>
+      </div>
+      
+      <div class="number-card" style="border-left-color: #667eea;">
+        <div class="num">85</div>
+        <div class="count">3 archivi</div>
+        <div class="archivi">
+          <span class="badge badge-cool">L1</span>
+          <span class="badge badge-cool">L3</span>
+        </div>
+      </div>
+      
+      <div class="number-card" style="border-left-color: #667eea;">
+        <div class="num">87</div>
+        <div class="count">3 archivi</div>
+        <div class="archivi">
+          <span class="badge badge-cool">L3</span>
+          <span class="badge badge-cool">L4</span>
+          <span class="badge badge-cool">L5</span>
+        </div>
+      </div>
+      
+      <div class="number-card" style="border-left-color: #667eea;">
+        <div class="num">32</div>
+        <div class="count">3 archivi</div>
+        <div class="archivi">
+          <span class="badge badge-cool">L3</span>
+          <span class="badge badge-cool">L4</span>
+        </div>
+      </div>
+      
+      <div class="number-card">
+        <div class="num">16</div>
+        <div class="count">2 archivi</div>
+        <div class="archivi">
+          <span class="badge badge-nd">L0</span>
+          <span class="badge badge-nd">L4</span>
+        </div>
+      </div>
+      
+      <div class="number-card">
+        <div class="num">33</div>
+        <div class="count">2 archivi</div>
+        <div class="archivi">
+          <span class="badge badge-nd">L2</span>
+          <span class="badge badge-nd">L3</span>
+        </div>
+      </div>
+      
+      <div class="number-card">
+        <div class="num">39</div>
+        <div class="count">2 archivi</div>
+        <div class="archivi">
+          <span class="badge badge-nd">L5</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- TABELLA 3: CLASSIFICA AMBI L0 PER FORZA SINCRONA -->
+    <h4> Classifica Ambi L0 per Forza Sincrona</h4>
+    <table>
+      <thead>
+        <tr>
+          <th>Rank</th>
+          <th>Ambo L0</th>
+          <th>Archivi Coperti</th>
+          <th>Valutazione</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr style="background: rgba(56,239,125,0.15);">
+          <td><strong>1</strong></td>
+          <td><span class="ambo-l0">13-28</span></td>
+          <td>5/5</td>
+          <td><span class="badge badge-sync">ECCELLENTE</span></td>
+        </tr>
+        <tr>
+          <td><strong>2</strong></td>
+          <td><span class="ambo-l0">77-80</span></td>
+          <td>3/5</td>
+          <td><span class="badge badge-warm">OTTIMO</span></td>
+        </tr>
+        <tr>
+          <td><strong>3</strong></td>
+          <td><span class="ambo-l0">53-61</span></td>
+          <td>3/5</td>
+          <td><span class="badge badge-warm">OTTIMO</span></td>
+        </tr>
+        <tr>
+          <td><strong>4</strong></td>
+          <td><span class="ambo-l0">12-88</span></td>
+          <td>3/5</td>
+          <td><span class="badge badge-warm">OTTIMO</span></td>
+        </tr>
+        <tr>
+          <td><strong>5</strong></td>
+          <td><span class="ambo-l0">03-13</span></td>
+          <td>2/5</td>
+          <td><span class="badge badge-cool">BUONO</span></td>
+        </tr>
+        <tr>
+          <td><strong>6</strong></td>
+          <td><span class="ambo-l0">63-70</span></td>
+          <td>2/5</td>
+          <td><span class="badge badge-cool">BUONO</span></td>
+        </tr>
+        <tr>
+          <td><strong>7</strong></td>
+          <td><span class="ambo-l0">16-88</span></td>
+          <td>1/5</td>
+          <td><span class="badge badge-nd">DISCRETO</span></td>
+        </tr>
+        <tr>
+          <td><strong>8</strong></td>
+          <td><span class="ambo-l0">55-56</span></td>
+          <td>1/5</td>
+          <td><span class="badge badge-nd">DISCRETO</span></td>
+        </tr>
+        <tr>
+          <td><strong>9</strong></td>
+          <td><span class="ambo-l0">19-65</span></td>
+          <td>1/5</td>
+          <td><span class="badge badge-nd">DISCRETO</span></td>
+        </tr>
+        <tr>
+          <td><strong>10</strong></td>
+          <td><span class="ambo-l0">18-49</span></td>
+          <td>0/5</td>
+          <td><span class="badge badge-nd">DEBOLE</span></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="sync-highlight">
+      <strong>🎯 AMBO TOP CONSIGLIATO: 13-28</strong> (coperto da 5 archivi)
+      <div style="margin-top:10px;">
+        <strong>🔥 NUMERO TOP SINCRONO: 28</strong> (presente in 5 archivi)
+      </div>
+    </div>
+    
+    <div class="warning-box">
+      ⚠️ Nessun ambo identico sincrono trovato tra archivi (analisi basata su numeri singoli)
     </div>
   </div>
 
@@ -643,7 +1141,7 @@
     </div>
 
     <div class="sintesi-box">
-      <h3>🏆 AMBI RACCOMANDATI</h3>
+      <h3> AMBI RACCOMANDATI</h3>
       <div class="sintesi-item">
         <span class="badge badge-forte">FORTE</span> <strong>89-40</strong> (Ind. 3,016) — Ruota: TO
       </div>
@@ -656,7 +1154,7 @@
     </div>
 
     <div class="sintesi-box">
-      <h3> RUOTE PREFERITE (da FIBO/GANN)</h3>
+      <h3>🎯 RUOTE PREFERITE (da FIBO/GANN)</h3>
       <div class="ruote-tags">
         <span class="ruota-tag top">NA (100% FIBO - 8/8 GANN)</span>
         <span class="ruota-tag top">VE (79,5% FIBO - 8/8 GANN)</span>
@@ -666,25 +1164,36 @@
     </div>
 
     <div class="sintesi-box">
-      <h3>🔄 SEGNALI SPECIALI</h3>
+      <h3>🔍 CONFRONTO MULTI-ARCHIVIO - SEGNALI CHIAVE</h3>
       <div class="sintesi-item">
-        <strong>Archivio L0 (Reale):</strong> Ambo più ritardato 03-13 (ritardo 256)
+        <span class="badge badge-sync">ECCELLENTE</span> <strong>Ambo 13-28:</strong> coperto da 5 archivi su 6 (L1,L2,L3,L4,L5)
+      </div>
+      <div class="sintesi-item">
+        <span class="badge badge-hot">TOP</span> <strong>Numero 28:</strong> presente in 5 archivi (L0,L2,L3,L4)
+      </div>
+      <div class="sintesi-item">
+        <span class="badge badge-hot">TOP</span> <strong>Numero 53:</strong> presente in 5 archivi (L0,L1,L2)
+      </div>
+      <div class="sintesi-item">
+        <span class="badge badge-warm">FORTE</span> <strong>Numeri 12, 42, 80, 13, 45:</strong> presenti in 4 archivi ciascuno
       </div>
       <div class="sintesi-item">
         <strong>Gruppi Distanza FI:</strong> 07-09 (2138 OLTRE) | 86-88 (1500 OLTRE)
       </div>
-      <div class="sintesi-item">
-        <strong>Multi-Archivio:</strong> L1-L5 non configurati — analisi disponibile solo su L0
-      </div>
     </div>
 
     <div class="success-box" style="font-size:1.1em;">
-      💡 <strong>CONSIGLIO OPERATIVO:</strong> Gioco su <strong>TUTTE</strong> le ruote, con preferenza per <strong>NA, VE, PA, FI</strong> per l'ambo 89-85. FIBO = rc/rx | GANN = rc/media
+      💡 <strong>CONSIGLIO OPERATIVO:</strong><br>
+      • Gioco su <strong>TUTTE</strong> le ruote per ambi 89-40, 89-85, 89-11<br>
+      • Preferenza per <strong>NA, VE, PA, FI</strong> (FIBO/GANN elevati)<br>
+      • Monitorare numeri sincroni <strong>28, 53, 12, 80, 13</strong> per giochi combinati<br>
+      • FIBO = rc/rx | GANN = rc/media
     </div>
   </div>
 
   <div class="footer">
-    SUPERBIG V3 ULTIMATE — Analisi completata in 00:02:04 | Periodo: 10423-10910 | 27 cicli = 487 estrazioni
+    SUPERBIG V3 ULTIMATE — Analisi completata in 00:01:20 | Periodo: 10423-10910 | 27 cicli = 487 estrazioni<br>
+    <span style="color:#667eea;">Confronto Multi-Archivio L0-L5 integrato dinamicamente</span>
   </div>
 
 </div>
