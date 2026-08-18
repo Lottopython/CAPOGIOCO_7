@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SUPERBIG V3 ULTIMATE - Analisi Capogioco 89</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
+    color: #e0e0e0;
+    padding: 20px;
+    min-height: 100vh;
+  }
+  .container { max-width: 1400px; margin: 0 auto; }
+  
+  .header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    padding: 30px;
+    border-radius: 15px;
+    text-align: center;
+    margin-bottom: 25px;
+    box-shadow: 0 10px 40px rgba(102, 126, 234, 0.4);
+  }
+  .header h1 { font-size: 2.5em; color: white; text-shadow: 2px 2px 4px rgba(0,0,0,0.3); }
+  .header .subtitle { color: #f0f0f0; font-size: 1.1em; margin-top: 10px; }
+  
+  .config-bar {
+    background: rgba(255,255,255,0.1);
+    backdrop-filter: blur(10px);
+    padding: 15px 25px;
+    border-radius: 10px;
+    margin-bottom: 25px;
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    border: 1px solid rgba(255,255,255,0.2);
+  }
+  .config-item { text-align: center; padding: 10px; }
+  .config-item .label { font-size: 0.85em; color: #aaa; text-transform: uppercase; }
+  .config-item .value { font-size: 1.4em; font-weight: bold; color: #ffd700; }
+  
+  .card {
+    background: rgba(255,255,255,0.05);
+    backdrop-filter: blur(10px);
+    border-radius: 15px;
+    padding: 25px;
+    margin-bottom: 25px;
+    border: 1px solid rgba(255,255,255,0.1);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+  }
+  .card h2 {
+    color: #ffd700;
+    font-size: 1.5em;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid rgba(255,215,0,0.3);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .card h3 {
+    color: #667eea;
+    font-size: 1.2em;
+    margin: 20px 0 15px 0;
+  }
+  
+  .cg-highlight {
+    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+    padding: 20px;
+    border-radius: 12px;
+    text-align: center;
+    margin: 20px 0;
+  }
+  .cg-highlight .cg-num { font-size: 4em; font-weight: bold; color: white; }
+  .cg-highlight .cg-label { color: white; font-size: 1.1em; }
+  .cg-highlight .cg-score { 
+    background: rgba(255,255,255,0.3); 
+    padding: 5px 20px; 
+    border-radius: 20px; 
+    display: inline-block;
+    margin-top: 10px;
+    color: white;
+    font-weight: bold;
+  }
+  
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 15px 0;
+    background: rgba(0,0,0,0.3);
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  th {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 12px 8px;
+    font-size: 0.85em;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  td {
+    padding: 10px 8px;
+    text-align: center;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    font-size: 0.95em;
+  }
+  tr:hover { background: rgba(255,255,255,0.05); }
+  tr:nth-child(even) { background: rgba(255,255,255,0.02); }
+  
+  .badge {
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.85em;
+    font-weight: bold;
+    display: inline-block;
+  }
+  .badge-forte { background: linear-gradient(135deg, #11998e, #38ef7d); color: white; }
+  .badge-media { background: linear-gradient(135deg, #f7971e, #ffd200); color: #333; }
+  .badge-attesa { background: linear-gradient(135deg, #4b6cb7, #182848); color: white; }
+  .badge-top { background: linear-gradient(135deg, #ff416c, #ff4b2b); color: white; }
+  .badge-oltre { background: linear-gradient(135deg, #11998e, #38ef7d); color: white; }
+  .badge-sotto { background: #666; color: white; }
+  
+  .rank-1 { background: linear-gradient(135deg, #ffd700, #ffaa00); color: #333; font-weight: bold; }
+  .rank-2 { background: linear-gradient(135deg, #c0c0c0, #a0a0a0); color: #333; font-weight: bold; }
+  .rank-3 { background: linear-gradient(135deg, #cd7f32, #a0522d); color: white; font-weight: bold; }
+  
+  .metrics-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 15px;
+    margin: 20px 0;
+  }
+  .metric-box {
+    background: rgba(255,255,255,0.08);
+    padding: 15px;
+    border-radius: 10px;
+    text-align: center;
+    border-left: 4px solid #667eea;
+  }
+  .metric-box .m-label { font-size: 0.8em; color: #aaa; text-transform: uppercase; }
+  .metric-box .m-value { font-size: 1.8em; font-weight: bold; color: #ffd700; margin-top: 5px; }
+  .metric-box .m-sub { font-size: 0.85em; color: #888; margin-top: 3px; }
+  
+  .progress-bar {
+    background: rgba(255,255,255,0.1);
+    border-radius: 10px;
+    height: 25px;
+    overflow: hidden;
+    margin: 10px 0;
+    position: relative;
+  }
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #667eea, #764ba2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: bold;
+    font-size: 0.9em;
+  }
+  
+  .fibo-table td { font-size: 0.9em; }
+  .fibo-high { color: #38ef7d; font-weight: bold; }
+  .fibo-mid { color: #ffd200; }
+  .fibo-low { color: #888; }
+  
+  .ruote-tags { display: flex; flex-wrap: wrap; gap: 8px; margin: 10px 0; }
+  .ruota-tag {
+    background: rgba(102, 126, 234, 0.3);
+    padding: 5px 15px;
+    border-radius: 20px;
+    font-weight: bold;
+    border: 1px solid #667eea;
+  }
+  .ruota-tag.top { background: linear-gradient(135deg, #667eea, #764ba2); color: white; }
+  
+  .sintesi-box {
+    background: linear-gradient(135deg, rgba(102,126,234,0.2), rgba(118,75,162,0.2));
+    border: 2px solid #667eea;
+    border-radius: 15px;
+    padding: 25px;
+    margin: 20px 0;
+  }
+  .sintesi-box h3 { color: #ffd700; margin-bottom: 15px; }
+  .sintesi-item {
+    padding: 10px;
+    margin: 8px 0;
+    background: rgba(0,0,0,0.3);
+    border-radius: 8px;
+    border-left: 4px solid #667eea;
+  }
+  .sintesi-item strong { color: #ffd700; }
+  
+  .criteri-list { list-style: none; }
+  .criteri-list li {
+    padding: 8px 15px;
+    margin: 5px 0;
+    background: rgba(255,255,255,0.05);
+    border-radius: 8px;
+    border-left: 3px solid #667eea;
+  }
+  .criteri-list li strong { color: #ffd700; }
+  
+  .warning-box {
+    background: linear-gradient(135deg, rgba(255,65,108,0.2), rgba(255,75,43,0.2));
+    border: 2px solid #ff416c;
+    border-radius: 10px;
+    padding: 15px;
+    margin: 15px 0;
+    color: #ff6b8a;
+  }
+  .success-box {
+    background: linear-gradient(135deg, rgba(56,239,125,0.2), rgba(17,153,142,0.2));
+    border: 2px solid #38ef7d;
+    border-radius: 10px;
+    padding: 15px;
+    margin: 15px 0;
+    color: #38ef7d;
+  }
+  
+  .footer {
+    text-align: center;
+    padding: 20px;
+    color: #888;
+    font-size: 0.9em;
+    margin-top: 30px;
+  }
+  
+  @media (max-width: 768px) {
+    .header h1 { font-size: 1.8em; }
+    .metrics-grid { grid-template-columns: 1fr 1fr; }
+    table { font-size: 0.8em; }
+    th, td { padding: 6px 4px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <!-- HEADER -->
+  <div class="header">
+    <h1>🎯 SUPERBIG V3 ULTIMATE</h1>
+    <div class="subtitle">Analisi Automatica Capogioco Ottimale</div>
+  </div>
+
+  <!-- CONFIGURAZIONE -->
+  <div class="config-bar">
+    <div class="config-item">
+      <div class="label">Cicli Analizzati</div>
+      <div class="value">27</div>
+    </div>
+    <div class="config-item">
+      <div class="label">Estrazioni</div>
+      <div class="value">487</div>
+    </div>
+    <div class="config-item">
+      <div class="label">Periodo</div>
+      <div class="value">10423 → 10910</div>
+    </div>
+    <div class="config-item">
+      <div class="label">Soglia Dinamica</div>
+      <div class="value">1000</div>
+    </div>
+    <div class="config-item">
+      <div class="label">Tempo Elaborazione</div>
+      <div class="value">00:01:58</div>
+    </div>
+  </div>
+
+  <!-- TOP 10 CAPOGIOCO CANDIDATI -->
+  <div class="card">
+    <h2> TOP 10 CAPOGIOCO CANDIDATI</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Rank</th>
+          <th>CG</th>
+          <th>Cicli</th>
+          <th>Max1</th>
+          <th>Freq.Cap</th>
+          <th>Ambi.Cand</th>
+          <th>Tambomin</th>
+          <th>PUNTEGGIO</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="rank-1"><td> 1</td><td><strong>89</strong></td><td>2</td><td>209</td><td>261</td><td>3</td><td>1</td><td><strong>64</strong></td></tr>
+        <tr class="rank-2"><td>🥈 2</td><td>27</td><td>2</td><td>160</td><td>287</td><td>3</td><td>4</td><td>63</td></tr>
+        <tr class="rank-3"><td>🥉 3</td><td>19</td><td>2</td><td>163</td><td>277</td><td>1</td><td>0</td><td>63</td></tr>
+        <tr><td>4</td><td>39</td><td>2</td><td>167</td><td>272</td><td>1</td><td>0</td><td>63</td></tr>
+        <tr><td>5</td><td>37</td><td>2</td><td>193</td><td>270</td><td>2</td><td>2</td><td>63</td></tr>
+        <tr><td>6</td><td>17</td><td>2</td><td>176</td><td>274</td><td>2</td><td>—</td><td>63</td></tr>
+        <tr><td>7</td><td>09</td><td>2</td><td>185</td><td>290</td><td>4</td><td>0</td><td>63</td></tr>
+        <tr><td>8</td><td>06</td><td>2</td><td>123</td><td>295</td><td>1</td><td>0</td><td>63</td></tr>
+        <tr><td>9</td><td>15</td><td>2</td><td>149</td><td>287</td><td>2</td><td>3</td><td>63</td></tr>
+        <tr><td>10</td><td>12</td><td>2</td><td>162</td><td>272</td><td>3</td><td>0</td><td>63</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- CRITERI DI VALUTAZIONE -->
+  <div class="card">
+    <h2>📊 CRITERI DI VALUTAZIONE (max 100 punti)</h2>
+    <ul class="criteri-list">
+      <li><strong>🎯 Frequenza Capogioco (max 30):</strong> entro 10% dalla media = 30pt</li>
+      <li><strong>🎲 Ambi Candidati (max 25):</strong> ≤5=25pt, ≤10=20pt, ≤20=15pt</li>
+      <li><strong>⚖️ Tambominmax Ratio (max 20):</strong> ≤0.3=20pt, ≤0.6=17pt</li>
+      <li><strong>⏱️ Durata Max Ciclo (max 15):</strong> 40-250=15pt</li>
+      <li><strong>🔄 Cicli Completati (max 8):</strong> ≥15=8pt, ≥10=7pt</li>
+      <li><strong>📐 Indice Densità (max 2):</strong> 0.9-1.1=2pt</li>
+    </ul>
+  </div>
+
+  <!-- CAPOGIOCO SELEZIONATO -->
+  <div class="cg-highlight">
+    <div class="cg-label">🎯 CAPOGIOCO SELEZIONATO AUTOMATICAMENTE</div>
+    <div class="cg-num">89</div>
+    <div class="cg-score">⭐ Punteggio: 64/100</div>
+  </div>
+
+  <!-- FASE 1 e 6: CICLI E RECORD -->
+  <div class="card">
+    <h2>📈 FASE 1 e 6: CICLI, RECORD, TAMBOMINMAX</h2>
+    
+    <div class="metrics-grid">
+      <div class="metric-box">
+        <div class="m-label">Cicli Completati</div>
+        <div class="m-value">2</div>
+      </div>
+      <div class="metric-box">
+        <div class="m-label">Max1 (Record)</div>
+        <div class="m-value">209</div>
+      </div>
+      <div class="metric-box">
+        <div class="m-label">Max2</div>
+        <div class="m-value">166</div>
+      </div>
+      <div class="metric-box">
+        <div class="m-label">Diff1 dal Record</div>
+        <div class="m-value">99</div>
+      </div>
+      <div class="metric-box">
+        <div class="m-label">Diff2</div>
+        <div class="m-value">56</div>
+      </div>
+      <div class="metric-box">
+        <div class="m-label">PASSO</div>
+        <div class="m-value" style="color:#ff6b8a;">NO</div>
+      </div>
+      <div class="metric-box">
+        <div class="m-label">Tambominmax Storico</div>
+        <div class="m-value">4</div>
+      </div>
+      <div class="metric-box">
+        <div class="m-label">Tambominmax Attuale</div>
+        <div class="m-value" style="color:#38ef7d;">1</div>
+      </div>
+    </div>
+
+    <div class="success-box">
+      ✅ <strong>Ciclo Attuale:</strong> 10800-10910 (110 estrazioni) | Freq.Cap: 75 | Ind.%: 1,279
+    </div>
+
+    <div class="ruote-tags">
+      <span style="color:#ffd700; font-weight:bold;">Cap.Pres1x36:</span>
+      <span class="ruota-tag top">BA</span>
+      <span class="ruota-tag top">MI</span>
+      <span class="ruota-tag top">PA</span>
+    </div>
+
+    <h3>🎯 AMBI CANDIDATI (3): 11 - 40 - 85</h3>
+  </div>
+
+  <!-- TABELLA AMBI CANDIDATI -->
+  <div class="card">
+    <h2>📋 TABELLA AMBI CANDIDATI</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Ambo</th>
+          <th>nRUO</th>
+          <th>RminCor</th>
+          <th>SomRit</th>
+          <th>R.Tutte</th>
+          <th>RMed</th>
+          <th>RmaxRuo</th>
+          <th>Ruote</th>
+          <th>-1Rx</th>
+          <th>-1xTT</th>
+          <th>%</th>
+          <th>Rit.An.</th>
+          <th>Trend</th>
+          <th>P1x36</th>
+          <th>GG Att.</th>
+          <th>GG Stor.</th>
+          <th>App.Vu</th>
+          <th>Ind.Ambo</th>
+          <th>ESITO</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>89-85</strong></td>
+          <td>1</td><td>1165</td><td>1165</td><td>165</td><td>1165</td><td>1779</td>
+          <td>NA|</td><td>1157</td><td>281</td><td>58,72</td><td>165</td>
+          <td><strong>2U-0D</strong></td><td>CA-FI-MI-</td><td>0</td><td>0</td><td>0</td>
+          <td><strong>3,802</strong></td>
+          <td><span class="badge badge-media">MEDIA</span></td>
+        </tr>
+        <tr>
+          <td><strong>89-11</strong></td>
+          <td>1</td><td>1051</td><td>1051</td><td>133</td><td>1051</td><td>2378</td>
+          <td>BA|</td><td>2378</td><td>328</td><td>40,55</td><td>133</td>
+          <td><strong>2U-0D</strong></td><td>MI-RO-TO-</td><td>0</td><td>0</td><td>0</td>
+          <td><strong>3,030</strong></td>
+          <td><span class="badge badge-media">MEDIA</span></td>
+        </tr>
+        <tr>
+          <td><strong>89-40</strong></td>
+          <td>1</td><td>1637</td><td>1637</td><td>133</td><td>1637</td><td>2158</td>
+          <td>TO|</td><td>1070</td><td>371</td><td>35,85</td><td>133</td>
+          <td><strong>0U-1D</strong></td><td>GE-NA-</td><td>0</td><td>0</td><td>0</td>
+          <td><strong>3,016</strong></td>
+          <td><span class="badge badge-forte">FORTE</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- APPENDICE A: FIBO/GANN -->
+  <div class="card">
+    <h2>📎 APPENDICE A: DOPPIA GRADUATORIA - FIBO/GANN per 89-85</h2>
+    <div class="success-box">
+      🏆 <strong>Migliore per Ind.Ambo:</strong> 89-85 (Ind. 3,802)
+    </div>
+
+    <table class="fibo-table">
+      <thead>
+        <tr>
+          <th>Ruota</th>
+          <th>rc</th>
+          <th>rx</th>
+          <th>% FIBO</th>
+          <th>Liv.FIBO</th>
+          <th>% GANN</th>
+          <th>Liv.GANN</th>
+          <th>Valutazione</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>NA</strong></td><td>1165</td><td>1165</td>
+          <td class="fibo-high">100%</td><td class="fibo-high">100% MAX</td>
+          <td class="fibo-high">263,8</td><td class="fibo-high">8/8 QUADRATURA</td>
+          <td>🟢 ECCELLENTE</td>
+        </tr>
+        <tr>
+          <td><strong>VE</strong></td><td>577</td><td>726</td>
+          <td class="fibo-high">79,5%</td><td class="fibo-high">78,6%</td>
+          <td class="fibo-high">140</td><td class="fibo-high">8/8 QUADRATURA</td>
+          <td>🟢 ECCELLENTE</td>
+        </tr>
+        <tr>
+          <td><strong>PA</strong></td><td>835</td><td>1083</td>
+          <td class="fibo-high">77,1%</td><td class="fibo-high">61,8%</td>
+          <td class="fibo-high">258,4</td><td class="fibo-high">8/8 QUADRATURA</td>
+          <td>🟢 ECCELLENTE</td>
+        </tr>
+        <tr>
+          <td><strong>RO</strong></td><td>366</td><td>656</td>
+          <td class="fibo-mid">55,8%</td><td class="fibo-mid">50%</td>
+          <td class="fibo-high">114,9</td><td class="fibo-high">8/8 QUADRATURA</td>
+          <td>🟢 OTTIMO</td>
+        </tr>
+        <tr>
+          <td><strong>FI</strong></td><td>503</td><td>942</td>
+          <td class="fibo-mid">53,4%</td><td class="fibo-mid">50%</td>
+          <td class="fibo-high">106,6</td><td class="fibo-high">8/8 QUADRATURA</td>
+          <td>🟢 OTTIMO</td>
+        </tr>
+        <tr>
+          <td><strong>GE</strong></td><td>428</td><td>987</td>
+          <td class="fibo-mid">43,4%</td><td class="fibo-mid">38,2%</td>
+          <td class="fibo-high">111,9</td><td class="fibo-high">8/8 QUADRATURA</td>
+          <td>🟢 BUONO</td>
+        </tr>
+        <tr>
+          <td><strong>MI</strong></td><td>424</td><td>1135</td>
+          <td class="fibo-mid">37,4%</td><td class="fibo-mid">23,6%</td>
+          <td class="fibo-high">117,6</td><td class="fibo-high">8/8 QUADRATURA</td>
+          <td>🟡 DISCRETO</td>
+        </tr>
+        <tr>
+          <td>TO</td><td>349</td><td>1779</td>
+          <td class="fibo-low">19,6%</td><td class="fibo-low">sotto 23,6%</td>
+          <td class="fibo-low">49,7</td><td class="fibo-low">3/8</td>
+          <td>⚪ BASSO</td>
+        </tr>
+        <tr>
+          <td>BA</td><td>165</td><td>1004</td>
+          <td class="fibo-low">16,4%</td><td class="fibo-low">sotto 23,6%</td>
+          <td class="fibo-low">45,4</td><td class="fibo-low">3/8</td>
+          <td>⚪ BASSO</td>
+        </tr>
+        <tr>
+          <td>CA</td><td>172</td><td>1184</td>
+          <td class="fibo-low">14,5%</td><td class="fibo-low">sotto 23,6%</td>
+          <td class="fibo-low">51,1</td><td class="fibo-low">4/8</td>
+          <td>⚪ BASSO</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3>🎯 Top 4 ruote consigliate (rc):</h3>
+    <div class="ruote-tags">
+      <span class="ruota-tag top">NA</span>
+      <span class="ruota-tag top">PA</span>
+      <span class="ruota-tag top">VE</span>
+      <span class="ruota-tag top">FI</span>
+    </div>
+  </div>
+
+  <!-- APPENDICE B: ANALISI ESTRATTI -->
+  <div class="card">
+    <h2>📎 APPENDICE B: ANALISI ESTRATTI (rc/rx) per 89-85</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Ruota</th>
+          <th>Estr.1 rc</th>
+          <th>Estr.1 rx</th>
+          <th>Estr.2 rc</th>
+          <th>Estr.2 rx</th>
+          <th>Note Estr.1</th>
+          <th>Note Estr.2</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>GE</td><td>7</td><td>121</td><td>15</td><td>103</td><td>—</td><td>—</td></tr>
+        <tr><td>MI</td><td>11</td><td>112</td><td>7</td><td>133</td><td>—</td><td>—</td></tr>
+        <tr><td>FI</td><td>11</td><td>103</td><td>21</td><td>105</td><td>—</td><td>—</td></tr>
+        <tr><td>BA</td><td>21</td><td>89</td><td>39</td><td>135</td><td>—</td><td>—</td></tr>
+        <tr><td>CA</td><td>10</td><td>100</td><td>9</td><td>115</td><td>—</td><td>—</td></tr>
+        <tr><td>TO</td><td>9</td><td>140</td><td>1</td><td>107</td><td>—</td><td>—</td></tr>
+        <tr><td>VE</td><td>4</td><td>128</td><td>17</td><td>111</td><td>—</td><td>—</td></tr>
+        <tr><td>RO</td><td>8</td><td>133</td><td>4</td><td>113</td><td>—</td><td>—</td></tr>
+        <tr><td><strong>NA</strong></td><td><strong>44</strong></td><td>106</td><td>11</td><td>99</td><td>—</td><td>—</td></tr>
+        <tr><td>PA</td><td>1</td><td>120</td><td>7</td><td>118</td><td>—</td><td>—</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- FASE 3: MULTI-ARCHIVIO -->
+  <div class="card">
+    <h2>📊 FASE 3: MULTI-ARCHIVIO L0-L5</h2>
+    <table>
+      <thead>
+        <tr><th>L0</th><th>L1</th><th>L2</th><th>L3</th><th>L4</th><th>L5</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>03.13 (256)</td><td>38.74 (33)</td><td>38.74 (33)</td><td>38.74 (33)</td><td>38.74 (33)</td><td>38.74 (33)</td></tr>
+        <tr><td>12.88 (254)</td><td>38.73 (33)</td><td>38.73 (33)</td><td>38.73 (33)</td><td>38.73 (33)</td><td>38.73 (33)</td></tr>
+        <tr><td>13.28 (266)</td><td>38.79 (33)</td><td>38.79 (33)</td><td>38.79 (33)</td><td>38.79 (33)</td><td>38.79 (33)</td></tr>
+        <tr><td>16.88 (301)</td><td>38.80 (33)</td><td>38.80 (33)</td><td>38.80 (33)</td><td>38.80 (33)</td><td>38.80 (33)</td></tr>
+        <tr><td>18.49 (291)</td><td>38.83 (33)</td><td>38.83 (33)</td><td>38.83 (33)</td><td>38.83 (33)</td><td>38.83 (33)</td></tr>
+        <tr><td>19.65 (274)</td><td>38.85 (33)</td><td>38.85 (33)</td><td>38.85 (33)</td><td>38.85 (33)</td><td>38.85 (33)</td></tr>
+        <tr><td>53.61 (324)</td><td>38.81 (33)</td><td>38.81 (33)</td><td>38.81 (33)</td><td>38.81 (33)</td><td>38.81 (33)</td></tr>
+        <tr><td>55.56 (348)</td><td>38.82 (33)</td><td>38.82 (33)</td><td>38.82 (33)</td><td>38.82 (33)</td><td>38.82 (33)</td></tr>
+        <tr><td>63.70 (282)</td><td>38.86 (33)</td><td>38.86 (33)</td><td>38.86 (33)</td><td>38.86 (33)</td><td>38.86 (33)</td></tr>
+        <tr><td>77.80 (272)</td><td>38.84 (33)</td><td>38.84 (33)</td><td>38.84 (33)</td><td>38.84 (33)</td><td>38.84 (33)</td></tr>
+      </tbody>
+    </table>
+    <div class="success-box">
+      🔄 <strong>AMBO SINCRONO:</strong> 38-74 presente in tutti i 6 livelli (L0-L5) con ritardo 33
+    </div>
+  </div>
+
+  <!-- FASE 4: GRUPPI DISTANZA -->
+  <div class="card">
+    <h2>🎲 FASE 4: GRUPPI DISTANZA (Firenze dist.2)</h2>
+    <table>
+      <thead>
+        <tr><th>Ambo</th><th>Ritardo</th><th>Stato</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>07-09</strong></td><td><strong>2138</strong></td><td><span class="badge badge-oltre">OLTRE</span></td></tr>
+        <tr><td><strong>86-88</strong></td><td><strong>1500</strong></td><td><span class="badge badge-oltre">OLTRE</span></td></tr>
+        <tr><td>64-66</td><td>1441</td><td><span class="badge badge-sotto">sotto</span></td></tr>
+        <tr><td>01-03</td><td>1381</td><td><span class="badge badge-sotto">sotto</span></td></tr>
+        <tr><td>12-14</td><td>1289</td><td><span class="badge badge-sotto">sotto</span></td></tr>
+        <tr><td>37-39</td><td>1265</td><td><span class="badge badge-sotto">sotto</span></td></tr>
+        <tr><td>53-55</td><td>1221</td><td><span class="badge badge-sotto">sotto</span></td></tr>
+      </tbody>
+    </table>
+    <div class="warning-box">
+      ⚠️ <strong>Backtest:</strong> max 0 | attuale 1221 | 0% (dati non affidabili)
+    </div>
+  </div>
+
+  <!-- APPENDICE C: PRESENZE MENSILI -->
+  <div class="card">
+    <h2>📅 APPENDICE C: PRESENZE MENSILI CAPOGIOCO 89</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Ruota</th><th>Gen</th><th>Feb</th><th>Mar</th><th>Apr</th><th>Mag</th><th>Giu</th>
+          <th>Lug</th><th>Ago</th><th>Set</th><th>Ott</th><th>Nov</th><th>Tot</th><th>Scarto</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>GE</td><td>0</td><td>0</td><td>0</td><td>2</td><td>0</td><td>3</td><td>3</td><td>1</td><td>0</td><td>0</td><td>0</td><td><strong>9</strong></td><td style="color:#38ef7d;">+2</td></tr>
+        <tr><td>MI</td><td>0</td><td>4</td><td>1</td><td>0</td><td>2</td><td>0</td><td>1</td><td>0</td><td>0</td><td>0</td><td>0</td><td><strong>8</strong></td><td style="color:#38ef7d;">+1</td></tr>
+        <tr><td>FI</td><td>0</td><td>0</td><td>0</td><td>1</td><td>0</td><td>0</td><td>2</td><td>0</td><td>0</td><td>0</td><td>0</td><td><strong>3</strong></td><td style="color:#ff6b8a;">-4</td></tr>
+        <tr><td>BA</td><td>0</td><td>1</td><td>1</td><td>0</td><td>1</td><td>1</td><td>1</td><td>0</td><td>0</td><td>0</td><td>0</td><td><strong>5</strong></td><td style="color:#ff6b8a;">-2</td></tr>
+        <tr><td>CA</td><td>0</td><td>0</td><td>1</td><td>1</td><td>0</td><td>1</td><td>4</td><td>0</td><td>0</td><td>0</td><td>0</td><td><strong>7</strong></td><td>0</td></tr>
+        <tr><td>TO</td><td>0</td><td>1</td><td>1</td><td>2</td><td>2</td><td>0</td><td>2</td><td>0</td><td>0</td><td>0</td><td>0</td><td><strong>8</strong></td><td style="color:#38ef7d;">+1</td></tr>
+        <tr><td><strong>VE</strong></td><td>0</td><td>1</td><td>2</td><td>2</td><td>2</td><td>3</td><td>1</td><td>1</td><td>0</td><td>0</td><td>0</td><td><strong>12</strong></td><td style="color:#38ef7d;">+5 </td></tr>
+        <tr><td><strong>RO</strong></td><td>0</td><td>1</td><td>5</td><td>1</td><td>0</td><td>2</td><td>0</td><td>1</td><td>0</td><td>0</td><td>0</td><td><strong>10</strong></td><td style="color:#38ef7d;">+3 🟢</td></tr>
+        <tr><td>NA</td><td>0</td><td>0</td><td>3</td><td>0</td><td>4</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td><strong>7</strong></td><td>0</td></tr>
+        <tr><td>PA</td><td>0</td><td>2</td><td>0</td><td>0</td><td>3</td><td>0</td><td>0</td><td>1</td><td>0</td><td>0</td><td>0</td><td><strong>6</strong></td><td style="color:#ff6b8a;">-1</td></tr>
+      </tbody>
+    </table>
+    <div class="ruote-tags">
+      <span style="color:#ffd700; font-weight:bold;">Ruote più attive:</span>
+      <span class="ruota-tag top">VE (+5)</span>
+      <span class="ruota-tag top">RO (+3)</span>
+      <span class="ruota-tag top">GE (+2)</span>
+    </div>
+  </div>
+
+  <!-- SINTESI FINALE -->
+  <div class="card">
+    <h2>🎯 SINTESI SUPERBIG V3 ULTIMATE</h2>
+    
+    <div class="sintesi-box">
+      <h3>📊 STATO CICLO</h3>
+      <div class="sintesi-item">
+        <strong>Stato:</strong> non imminente | Ciclo attuale: 110 estrazioni (record: 209)
+      </div>
+      <div class="sintesi-item">
+        <strong>Tambominmax:</strong> Attuale (1) &lt; Storico (4) ✅ Ciclo economico
+      </div>
+    </div>
+
+    <div class="sintesi-box">
+      <h3>🏆 AMBI RACCOMANDATI</h3>
+      <div class="sintesi-item">
+        <span class="badge badge-forte">FORTE</span> <strong>89-40</strong> (Ind. 3,016) — Ruota: TO
+      </div>
+      <div class="sintesi-item">
+        <span class="badge badge-media">MEDIA</span> <strong>89-85</strong> (Ind. 3,802) — Ruota: NA | Trend 2U-0D
+      </div>
+      <div class="sintesi-item">
+        <span class="badge badge-media">MEDIA</span> <strong>89-11</strong> (Ind. 3,030) — Ruota: BA | Trend 2U-0D
+      </div>
+    </div>
+
+    <div class="sintesi-box">
+      <h3> RUOTE PREFERITE (da FIBO/GANN)</h3>
+      <div class="ruote-tags">
+        <span class="ruota-tag top">NA (100% FIBO - 8/8 GANN)</span>
+        <span class="ruota-tag top">VE (79,5% FIBO - 8/8 GANN)</span>
+        <span class="ruota-tag top">PA (77,1% FIBO - 8/8 GANN)</span>
+        <span class="ruota-tag top">FI (53,4% FIBO - 8/8 GANN)</span>
+      </div>
+    </div>
+
+    <div class="sintesi-box">
+      <h3>🔄 SEGNALI SPECIALI</h3>
+      <div class="sintesi-item">
+        <strong>Ambo Sincrono Multi-Archivio:</strong> 38-74 (presente in L0-L5)
+      </div>
+      <div class="sintesi-item">
+        <strong>Gruppi Distanza FI:</strong> 07-09 (2138 OLTRE) | 86-88 (1500 OLTRE)
+      </div>
+    </div>
+
+    <div class="success-box" style="font-size:1.1em;">
+      💡 <strong>CONSIGLIO OPERATIVO:</strong> Gioco su <strong>TUTTE</strong> le ruote, con preferenza per <strong>NA, VE, PA, FI</strong> per l'ambo 89-85. FIBO = rc/rx | GANN = rc/media
+    </div>
+  </div>
+
+  <div class="footer">
+    SUPERBIG V3 ULTIMATE — Analisi completata in 00:01:58 | Periodo: 10423-10910 | 27 cicli = 487 estrazioni
+  </div>
+
+</div>
+</body>
+</html>
